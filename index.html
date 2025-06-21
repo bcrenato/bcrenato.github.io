@@ -1,43 +1,62 @@
-<!-- index.html (atualizado) -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cadastro com Firebase</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background: #f4f4f4;
+    }
+    h1, h2 { text-align: center; }
+    form label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    ul { list-style: none; padding: 0; }
+    li { background: white; margin-bottom: 10px; padding: 10px; border-radius: 5px; }
+    #status { text-align: center; margin-top: 10px; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Cadastro de Usuário</h1>
-    <form id="cadastroForm">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" required />
+  <h1>Cadastro de Usuário</h1>
 
-      <label for="sobrenome">Sobrenome:</label>
-      <input type="text" id="sobrenome" required />
+  <form id="cadastroForm">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" required />
 
-      <label for="estadoCivil">Estado Civil:</label>
-      <select id="estadoCivil" required>
-        <option value="">Selecione</option>
-        <option value="solteiro">Solteiro</option>
-        <option value="casado">Casado</option>
-      </select>
+    <label for="sobrenome">Sobrenome:</label>
+    <input type="text" id="sobrenome" required />
 
-      <button type="submit">Cadastrar</button>
-    </form>
-    <p id="status"></p>
+    <label for="estadoCivil">Estado Civil:</label>
+    <select id="estadoCivil" required>
+      <option value="">Selecione</option>
+      <option value="solteiro">Solteiro</option>
+      <option value="casado">Casado</option>
+    </select>
 
-    <hr />
+    <button type="submit">Cadastrar</button>
+  </form>
 
-    <h2>Cadastros Salvos</h2>
-    <ul id="listaCadastros"></ul>
-  </div>
+  <p id="status"></p>
 
-  <!-- Firebase SDK -->
+  <hr />
+
+  <h2>Cadastros Salvos</h2>
+  <ul id="listaCadastros"></ul>
+
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
-  <!-- App -->
   <script src="app.js"></script>
 </body>
 </html>
