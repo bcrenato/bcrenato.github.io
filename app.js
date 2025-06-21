@@ -1,14 +1,13 @@
 // Substitua com seu firebaseConfig
  const firebaseConfig = {
-  apiKey: "AIzaSyC3aRZ...suaAPIKEYaqui",
-  authDomain: "seu-projeto.firebaseapp.com",
-  databaseURL: "https://seu-projeto-default-rtdb.firebaseio.com",
-  projectId: "seu-projeto",
-  storageBucket: "seu-projeto.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef123456"
+  apiKey: "AIzaSyAm7J99HoC-_ccqqTL6ORSKe0mPCVebyH8",
+  authDomain: "cadastro-firebase-22bb0.firebaseapp.com",
+  databaseURL: "https://cadastro-firebase-22bb0-default-rtdb.firebaseio.com",
+  projectId: "cadastro-firebase-22bb0",
+  storageBucket: "cadastro-firebase-22bb0.firebasestorage.app",
+  messagingSenderId: "476708455498",
+  appId: "1:476708455498:web:7504f49d3e5829354f52b3"
 };
-
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
