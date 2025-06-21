@@ -51,7 +51,7 @@ form.addEventListener('submit', function (e) {
   });
 });
 
-// Listar dados
+// Listar dados ao vivo
 database.ref('cadastros').on('value', (snapshot) => {
   lista.innerHTML = '';
   const dados = snapshot.val();
