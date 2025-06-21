@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Usuários</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastro</h1>
-        <form id="formCadastro">
-            <input type="text" id="nome" placeholder="Nome" required>
-            <input type="tel" id="telefone" placeholder="Telefone" required>
-            <input type="text" id="endereco" placeholder="Endereço" required>
-            <button type="submit">Cadastrar</button>
-        </form>
-        <div id="mensagem"></div>
-    </div>
-    <script src="app.js"></script>
+  <div class="container">
+    <h1>Cadastro de Usuário</h1>
+    <form id="cadastroForm">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" required>
+
+      <label for="sobrenome">Sobrenome:</label>
+      <input type="text" id="sobrenome" required>
+
+      <label for="estadoCivil">Estado Civil:</label>
+      <select id="estadoCivil" required>
+        <option value="">Selecione</option>
+        <option value="solteiro">Solteiro</option>
+        <option value="casado">Casado</option>
+      </select>
+
+      <button type="submit">Cadastrar</button>
+    </form>
+    <p id="status"></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
+  <!-- App logic -->
+  <script src="app.js"></script>
 </body>
 </html>
