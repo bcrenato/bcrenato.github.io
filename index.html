@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração - Igreja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .sidebar.collapsed {
+            width: 70px;
+        }
+        .sidebar.collapsed .sidebar-text {
+            display: none;
+        }
+        .main-content {
+            transition: all 0.3s ease;
+        }
+        .sidebar.collapsed + .main-content {
+            margin-left: 70px;
+        }
+        .active-tab {
+            border-bottom: 3px solid #3b82f6;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-blue-800 text-white w-64 flex flex-col">
+            <!-- Logo -->
+            <div class="p-4 flex items-center justify-between border-b border-blue-700">
+                <div class="flex items-center">
+                    <i class="fas fa-church text-2xl mr-3"></i>
+                    <span class="sidebar-text text-xl font-bold">Igreja Vida Nova</span>
+                </div>
+                <button id="toggleSidebar" class="text-white focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- User Profile -->
+            <div class="p-4 flex items-center border-b border-blue-700">
+                <div class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="ml-3 sidebar-text">
+                    <div class="font-medium">Pr. João Silva</div>
+                    <div class="text-xs text-blue-200">Administrador</div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto">
+                <ul class="py-2">
+                    <li>
+                        <a href="#" class="flex items-center p-3 hover:bg-blue-700">
+                            <i class="fas fa-tachometer-alt mr-3"></i>
+                            <span class="sidebar-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#events" class="flex items-center p-3 bg-blue-700">
+                            <i class="fas fa-calendar-alt mr-3"></i>
+                            <span class="sidebar-text">Eventos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#sermons" class="flex items-center p-3 hover:bg-blue-700">
+                            <i class="fas fa-bible mr-3"></i>
+                            <span class="sidebar-text">Sermões</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#members" class="flex items-center p-3 hover:bg-blue-700">
+                            <i class="fas fa-users mr-3"></i>
+                            <span class="sidebar-text">Membros</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#donations" class="flex items-center p-3 hover:bg-blue-700">
+                            <i class="fas fa-donate mr-3"></i>
+                            <span class="sidebar-text">Doações</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#settings" class="flex items-center p-3 hover:bg-blue-700">
+                            <i class="fas fa-cog mr-3"></i>
+                            <span class="sidebar-text">Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Logout -->
+            <div class="p-4 border-t border-blue-700">
+                <a href="#" class="flex items-center text-blue-200 hover:text-white">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    <span class="sidebar-text">Sair</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content flex-1 overflow-auto ml-64">
+            <!-- Header -->
+            <header class="bg-white shadow-sm">
+                <div class="px-6 py-4 flex justify-between items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">Gerenciamento de Eventos</h1>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i class="fas fa-bell text-gray-500 text-xl"></i>
+                            <span class="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500"></span>
+                        </div>
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                            <i class="fas fa-plus mr-2"></i> Novo Evento
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Content -->
+            <main class="p-6">
+                <!-- Tabs -->
+                <div class="border-b border-gray-200 mb-6">
+                    <ul class="flex flex-wrap -mb-px">
+                        <li class="mr-2">
+                            <a href="#" class="inline-block p-4 active-tab">Próximos Eventos</a>
+                        </li>
+                        <li class="mr-2">
+                            <a href="#" class="inline-block p-4 hover:text-blue-600 hover:border-blue-300">Passados</a>
+                        </li>
+                        <li class="mr-2">
+                            <a href="#" class="inline-block p-4 hover:text-blue-600 hover:border-blue-300">Recorrentes</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Events Table -->
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="p-4 flex justify-between items-center border-b">
+                        <div class="relative w-64">
+                            <input type="text" placeholder="Buscar evento..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 border rounded-md hover:bg-gray-50">
+                                <i class="fas fa-filter"></i> Filtrar
+                            </button>
+                            <button class="px-3 py-1 border rounded-md hover:bg-gray-50">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Responsável</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-pray text-blue-600"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Culto de Celebração</div>
+                                                <div class="text-sm text-gray-500">Culto dominical</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">12/06/2023</div>
+                                        <div class="text-sm text-gray-500">19:00 - 21:00</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Templo Central</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pr. João Silva</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmado</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-child text-yellow-600"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Escola Bíblica</div>
+                                                <div class="text-sm text-gray-500">Para crianças</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">15/06/2023</div>
+                                        <div class="text-sm text-gray-500">14:00 - 16:00</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Salão Infantil</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Irmã Maria</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pendente</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-music text-purple-600"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Ensaio do Louvor</div>
+                                                <div class="text-sm text-gray-500">Ministério de música</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">14/06/2023</div>
+                                        <div class="text-sm text-gray-500">20:00 - 22:00</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Templo Central</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Irmão Pedro</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmado</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 bg-red-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-utensils text-red-600"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Jantar Beneficente</div>
+                                                <div class="text-sm text-gray-500">Arrecadação de fundos</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">20/06/2023</div>
+                                        <div class="text-sm text-gray-500">19:30 - 23:00</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Salão Social</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Irmã Ana</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Em planejamento</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Anterior </a>
+                            <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Próximo </a>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Mostrando <span class="font-medium">1</span> a <span class="font-medium">4</span> de <span class="font-medium">12</span> resultados
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Anterior</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                    <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 1 </a>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 2 </a>
+                                    <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 3 </a>
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Próximo</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sermons Section -->
+                <div id="sermons" class="mt-12">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Gerenciamento de Sermões</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Sermon Card 1 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <div class="p-4 bg-blue-600 text-white">
+                                <h3 class="font-bold text-lg">A Fé que Move Montanhas</h3>
+                                <p class="text-sm text-blue-100">Mateus 17:20</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center text-sm text-gray-500 mb-2">
+                                    <i class="fas fa-user mr-2"></i>
+                                    <span>Pr. João Silva</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500 mb-4">
+                                    <i class="fas fa-calendar-alt mr-2"></i>
+                                    <span>05/06/2023</span>
+                                </div>
+                                <p class="text-gray-700 text-sm mb-4">Uma mensagem sobre o poder da fé e como ela pode transformar nossas vidas...</p>
+                                <div class="flex justify-between">
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                        <i class="fas fa-play-circle mr-1"></i> Ouvir
+                                    </button>
+                                    <div>
+                                        <button class="text-blue-600 hover:text-blue-800 mr-3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sermon Card 2 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <div class="p-4 bg-green-600 text-white">
+                                <h3 class="font-bold text-lg">O Amor Incondicional</h3>
+                                <p class="text-sm text-green-100">1 Coríntios 13:4-7</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center text-sm text-gray-500 mb-2">
+                                    <i class="fas fa-user mr-2"></i>
+                                    <span>Pr. Carlos Andrade</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500 mb-4">
+                                    <i class="fas fa-calendar-alt mr-2"></i>
+                                    <span>29/05/2023</span>
+                                </div>
+                                <p class="text-gray-700 text-sm mb-4">Explorando a profundidade do amor descrito por Paulo em sua carta aos Coríntios...</p>
+                                <div class="flex justify-between">
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                        <i class="fas fa-play-circle mr-1"></i> Ouvir
+                                    </button>
+                                    <div>
+                                        <button class="text-blue-600 hover:text-blue-800 mr-3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sermon Card 3 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <div class="p-4 bg-purple-600 text-white">
+                                <h3 class="font-bold text-lg">Vivendo em Comunhão</h3>
+                                <p class="text-sm text-purple-100">Atos 2:42-47</p>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center text-sm text-gray-500 mb-2">
+                                    <i class="fas fa-user mr-2"></i>
+                                    <span>Pr. João Silva</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500 mb-4">
+                                    <i class="fas fa-calendar-alt mr-2"></i>
+                                    <span>22/05/2023</span>
+                                </div>
+                                <p class="text-gray-700 text-sm mb-4">Como a igreja primitiva nos ensina sobre a importância da comunhão e do compartilhamento...</p>
+                                <div class="flex justify-between">
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                        <i class="fas fa-play-circle mr-1"></i> Ouvir
+                                    </button>
+                                    <div>
+                                        <button class="text-blue-600 hover:text-blue-800 mr-3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition flex items-center">
+                            <i class="fas fa-plus mr-2"></i> Adicionar Sermão
+                        </button>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- Footer -->
+            <footer class="bg-white border-t border-gray-200 py-4 px-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-sm text-gray-500 mb-2 md:mb-0">
+                        © 2023 Igreja Vida Nova. Todos os direitos reservados.
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-gray-700">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-gray-700">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-gray-700">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-gray-700">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+        });
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('[role="tab"]');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                tabs.forEach(t => {
+                    t.classList.remove('active-tab');
+                    t.classList.add('hover:text-blue-600', 'hover:border-blue-300');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active-tab');
+                this.classList.remove('hover:text-blue-600', 'hover:border-blue-300');
+            });
+        });
+
+        // Modal for adding new event (would be implemented in a real app)
+        document.querySelector('button:contains("Novo Evento")').addEventListener('click', function() {
+            alert('Modal para adicionar novo evento apareceria aqui');
+        });
+
+        // Modal for adding new sermon (would be implemented in a real app)
+        document.querySelector('button:contains("Adicionar Sermão")').addEventListener('click', function() {
+            alert('Modal para adicionar novo sermão apareceria aqui');
+        });
+
+        // Edit and delete buttons functionality
+        document.querySelectorAll('[class*="fa-edit"]').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                alert('Modal de edição apareceria aqui');
+            });
+        });
+
+        document.querySelectorAll('[class*="fa-trash"]').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if(confirm('Tem certeza que deseja excluir este item?')) {
+                    alert('Item excluído com sucesso!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
