@@ -1,4 +1,4 @@
-// Inicializa Firebase
+// Configuração do Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAm7J99HoC-_ccqqTL6ORSKe0mPCVebyH8",
   authDomain: "cadastro-firebase-22bb0.firebaseapp.com",
@@ -9,6 +9,7 @@ const firebaseConfig = {
   appId: "1:476708455498:web:7504f49d3e5829354f52b3"
 };
 
+// Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
@@ -21,9 +22,15 @@ const lista = document.getElementById('listaCadastros');
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const nome = document.getElementById('nome').value;
-  const sobrenome = document.getElementById('sobrenome').value;
+  const nome = document.getElementById('nome').value.trim();
+  const sobrenome = document.getElementById('sobrenome').value.trim();
   const estadoCivil = document.getElementById('estadoCivil').value;
+
+  if (!nome || !sobrenome || !estadoCivil) {
+    status.textContent = "Preencha todos os campos.";
+    status.style.color = "red";
+    return;
+  }
 
   const ref = database.ref('cadastros').push();
   ref.set({
@@ -34,15 +41,17 @@ form.addEventListener('submit', function (e) {
   })
   .then(() => {
     status.textContent = "Cadastro enviado com sucesso!";
+    status.style.color = "green";
     form.reset();
   })
   .catch((error) => {
     status.textContent = "Erro ao cadastrar.";
+    status.style.color = "red";
     console.error("Erro:", error);
   });
 });
 
-// Exibir cadastros
+// Listar dados
 database.ref('cadastros').on('value', (snapshot) => {
   lista.innerHTML = '';
   const dados = snapshot.val();
