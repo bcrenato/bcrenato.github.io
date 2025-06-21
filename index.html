@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Membros - Igreja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navbar -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-church text-2xl"></i>
+                <span class="text-xl font-bold">Igreja Cristã</span>
+            </div>
+            <div>
+                <a href="visualizar.html" class="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-gray-100 transition">
+                    <i class="fas fa-list mr-2"></i>Visualizar Cadastros
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="gradient-bg text-white rounded-xl p-6 shadow-lg max-w-4xl mx-auto">
+                <h1 class="text-3xl md:text-4xl font-bold mb-2">
+                    <i class="fas fa-user-plus mr-2"></i> Cadastro de Membros
+                </h1>
+                <p class="text-white/90">Preencha o formulário abaixo para se registrar como membro da nossa comunidade</p>
+            </div>
+        </header>
+
+        <!-- Progress Steps -->
+        <div class="max-w-4xl mx-auto mb-8">
+            <div class="flex justify-between relative">
+                <div class="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -z-10"></div>
+                <div class="step-progress absolute top-1/2 left-0 h-1 bg-indigo-500 transition-all duration-300" style="width: 33%"></div>
+                
+                <div class="step active flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">1</div>
+                    <span class="text-xs mt-2 font-medium text-indigo-600">Dados Pessoais</span>
+                </div>
+                <div class="step flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">2</div>
+                    <span class="text-xs mt-2 font-medium text-gray-500">Endereço</span>
+                </div>
+                <div class="step flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">3</div>
+                    <span class="text-xs mt-2 font-medium text-gray-500">Espiritual</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+            <form id="memberForm" class="p-6 md:p-8">
+                <!-- Step 1: Personal Info -->
+                <div class="step-content active" data-step="1">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-user-circle mr-2 text-indigo-500"></i> Dados Pessoais
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Campos do passo 1 (mesmo conteúdo do seu código original) -->
+                        <!-- ... -->
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between">
+                        <button type="button" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                            <i class="fas fa-times mr-2"></i> Cancelar
+                        </button>
+                        <button type="button" class="next-step px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center">
+                            Próximo <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Address -->
+                <div class="step-content hidden" data-step="2">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-indigo-500"></i> Endereço
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Campos do passo 2 (mesmo conteúdo do seu código original) -->
+                        <!-- ... -->
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between">
+                        <button type="button" class="prev-step px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center">
+                            <i class="fas fa-arrow-left mr-2"></i> Voltar
+                        </button>
+                        <button type="button" class="next-step px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center">
+                            Próximo <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Spiritual Info -->
+                <div class="step-content hidden" data-step="3">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-praying-hands mr-2 text-indigo-500"></i> Dados Espirituais
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Campos do passo 3 (mesmo conteúdo do seu código original) -->
+                        <!-- ... -->
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between">
+                        <button type="button" class="prev-step px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center">
+                            <i class="fas fa-arrow-left mr-2"></i> Voltar
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center">
+                            <i class="fas fa-check-circle mr-2"></i> Finalizar Cadastro
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <p>© 2023 Igreja Cristã - Todos os direitos reservados</p>
+            <p class="mt-1">Seus dados estão protegidos conforme nossa <a href="#" class="text-indigo-600 hover:underline">Política de Privacidade</a></p>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md mx-4 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check-circle text-green-600 text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Cadastro concluído!</h3>
+            <p class="text-gray-600 mb-6">Obrigado por se cadastrar como membro da nossa igreja.</p>
+            <button id="closeModal" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                Fechar
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
