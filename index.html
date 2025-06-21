@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igreja Crista Nova esperança Santo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .carousel-item {
+            transition: opacity 1s ease-in-out;
+        }
+        .carousel-item.hidden {
+            opacity: 0;
+        }
+        .carousel-item.active {
+            opacity: 1;
+        }
+        .sermon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .event-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-church text-3xl text-blue-600"></i>
+                <h1 class="text-2xl font-bold text-gray-800">Igreja Cristã Nova Esperança</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="text-blue-600 font-medium">Início</a>
+                <a href="#about" class="text-gray-700 hover:text-blue-600">Sobre</a>
+                <a href="#ministries" class="text-gray-700 hover:text-blue-600">Ministérios</a>
+                <a href="#events" class="text-gray-700 hover:text-blue-600">Eventos</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600">Contato</a>
+            </nav>
+            <button class="md:hidden text-gray-700" id="mobile-menu-button">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white py-4 px-4 shadow-lg" id="mobile-menu">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="text-blue-600 font-medium">Início</a>
+                <a href="#about" class="text-gray-700 hover:text-blue-600">Sobre</a>
+                <a href="#ministries" class="text-gray-700 hover:text-blue-600">Ministérios</a>
+                <a href="#events" class="text-gray-700 hover:text-blue-600">Eventos</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600">Contato</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Carousel -->
+    <section id="home" class="relative overflow-hidden">
+        <div class="carousel-container h-screen max-h-[600px] relative">
+            <!-- Carousel Item 1 -->
+            <div class="carousel-item active absolute inset-0 w-full h-full">
+                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                <img src="https://images.unsplash.com/photo-1435527173128-036b8f9c7a9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Igreja" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+                    <div class="text-white max-w-3xl">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-4">Bem-vindo à nossa comunidade</h2>
+                        <p class="text-xl md:text-2xl mb-8">Junte-se a nós em nossa jornada de fé e amor</p>
+                        <a href="#about" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition duration-300">Saiba mais</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Item 2 -->
+            <div class="carousel-item hidden absolute inset-0 w-full h-full">
+                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                <img src="https://images.unsplash.com/photo-1452421822248-d49c2f5667e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
+                     alt="Culto" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+                    <div class="text-white max-w-3xl">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-4">Cultos semanais</h2>
+                        <p class="text-xl md:text-2xl mb-8">Domingos às 9h e 19h | Quartas-feiras às 19h30</p>
+                        <a href="#events" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition duration-300">Ver horários</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Item 3 -->
+            <div class="carousel-item hidden absolute inset-0 w-full h-full">
+                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Bíblia" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+                    <div class="text-white max-w-3xl">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-4">Crescendo juntos na fé</h2>
+                        <p class="text-xl md:text-2xl mb-8">Grupos de estudo bíblico para todas as idades</p>
+                        <a href="#ministries" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition duration-300">Conheça nossos ministérios</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition">
+                <i class="fas fa-chevron-left text-xl"></i>
+            </button>
+            <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition">
+                <i class="fas fa-chevron-right text-xl"></i>
+            </button>
+            
+            <!-- Carousel Indicators -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
+                <button class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" data-index="0"></button>
+                <button class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" data-index="1"></button>
+                <button class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" data-index="2"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nossa História</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                         alt="Igreja antiga" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Uma jornada de fé desde 1950</h3>
+                    <p class="text-gray-600 mb-4">Fundada em 1950 por um grupo de fiéis dedicados, nossa igreja tem sido um farol de esperança e amor em nossa comunidade. Ao longo dos anos, crescemos não apenas em número, mas também em espírito, mantendo nossos valores fundamentais de compaixão, serviço e devoção.</p>
+                    <p class="text-gray-600 mb-6">Nossa missão é servir a Deus através do amor ao próximo, promovendo a união familiar e o crescimento espiritual de todos os membros de nossa comunidade.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center bg-blue-50 px-4 py-2 rounded-lg">
+                            <i class="fas fa-cross text-blue-600 mr-2"></i>
+                            <span class="text-gray-700">Tradição Cristã</span>
+                        </div>
+                        <div class="flex items-center bg-blue-50 px-4 py-2 rounded-lg">
+                            <i class="fas fa-hands-helping text-blue-600 mr-2"></i>
+                            <span class="text-gray-700">Serviço Comunitário</span>
+                        </div>
+                        <div class="flex items-center bg-blue-50 px-4 py-2 rounded-lg">
+                            <i class="fas fa-heart text-blue-600 mr-2"></i>
+                            <span class="text-gray-700">Amor ao Próximo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ministries Section -->
+    <section id="ministries" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nossos Ministérios</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Temos grupos para todas as idades e interesses, onde você pode crescer espiritualmente e servir à comunidade.</p>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Ministry 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-blue-600 flex items-center justify-center">
+                        <i class="fas fa-child text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Ministério Infantil</h3>
+                        <p class="text-gray-600 mb-4">Ensino bíblico criativo e divertido para crianças de 3 a 12 anos. Cultos infantis aos domingos e atividades especiais durante a semana.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Saiba mais</a>
+                    </div>
+                </div>
+                
+                <!-- Ministry 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-green-600 flex items-center justify-center">
+                        <i class="fas fa-users text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Juventude Cristã</h3>
+                        <p class="text-gray-600 mb-4">Encontros semanais para jovens de 13 a 25 anos, com estudos bíblicos relevantes, adoração e atividades sociais.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Saiba mais</a>
+                    </div>
+                </div>
+                
+                <!-- Ministry 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-purple-600 flex items-center justify-center">
+                        <i class="fas fa-music text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Ministério de Louvor</h3>
+                        <p class="text-gray-600 mb-4">Grupo dedicado a liderar a congregação em adoração através da música. Ensaios semanais e participação em todos os cultos.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Saiba mais</a>
+                    </div>
+                </div>
+                
+                <!-- Ministry 4 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-yellow-600 flex items-center justify-center">
+                        <i class="fas fa-hands-praying text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Grupo de Oração</h3>
+                        <p class="text-gray-600 mb-4">Encontros diários de oração intercessora por necessidades pessoais, da igreja e da comunidade.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Saiba mais</a>
+                    </div>
+                </div>
+                
+                <!-- Ministry 5 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-red-600 flex items-center justify-center">
+                        <i class="fas fa-hand-holding-heart text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Ação Social</h3>
+                        <p class="text-gray-600 mb-4">Projetos de assistência à comunidade, incluindo distribuição de alimentos, roupas e apoio a famílias carentes.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Saiba mais</a>
+                    </div>
+                </div>
+                
+                <!-- Ministry 6 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-indigo-600 flex items-center justify-center">
+                        <i class="fas fa-book-bible text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Estudo Bíblico</h3>
+                        <p class="text-gray-600 mb-4">Grupos pequenos que se reúnem semanalmente em casas para estudo bíblico aprofundado e comunhão.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Saiba mais</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sermons Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Mensagens Recentes</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Assista ou ouça nossas mensagens mais recentes e fortaleça sua fé.</p>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Sermon 1 -->
+                <div class="sermon-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative h-48 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Sermon" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                            <button class="bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-4 transition duration-300">
+                                <i class="fas fa-play text-blue-600 text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm text-blue-600 font-medium">12 de Junho, 2023</span>
+                        <h3 class="text-xl font-bold text-gray-800 my-2">O Poder da Fé</h3>
+                        <p class="text-gray-600 mb-4">Pr. João Silva explora como a fé pode mover montanhas em nossas vidas diárias.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 45 min</span>
+                            <div class="flex space-x-2">
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-play"></i></button>
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-download"></i></button>
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-share"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sermon 2 -->
+                <div class="sermon-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative h-48 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1452421822248-d49c2f5667e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
+                             alt="Sermon" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                            <button class="bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-4 transition duration-300">
+                                <i class="fas fa-play text-blue-600 text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm text-blue-600 font-medium">5 de Junho, 2023</span>
+                        <h3 class="text-xl font-bold text-gray-800 my-2">Amor Incondicional</h3>
+                        <p class="text-gray-600 mb-4">Pr. Maria Oliveira discute o amor de Deus e como podemos refleti-lo em nossas relações.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 38 min</span>
+                            <div class="flex space-x-2">
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-play"></i></button>
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-download"></i></button>
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-share"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sermon 3 -->
+                <div class="sermon-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative h-48 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1435527173128-036b8f9c7a9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Sermon" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                            <button class="bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-4 transition duration-300">
+                                <i class="fas fa-play text-blue-600 text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm text-blue-600 font-medium">29 de Maio, 2023</span>
+                        <h3 class="text-xl font-bold text-gray-800 my-2">Perdão e Libertação</h3>
+                        <p class="text-gray-600 mb-4">Pr. Carlos Mendes ensina sobre a importância do perdão para nossa libertação espiritual.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i> 52 min</span>
+                            <div class="flex space-x-2">
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-play"></i></button>
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-download"></i></button>
+                                <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-share"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition duration-300">Ver todas as mensagens</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Próximos Eventos</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Participe de nossos eventos e fortaleça sua fé em comunidade.</p>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Event 1 -->
+                <div class="event-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="h-48 bg-blue-100 flex items-center justify-center relative">
+                        <div class="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-lg">
+                            <span class="font-bold text-lg">15</span>
+                            <span class="block text-xs">JUN</span>
+                        </div>
+                        <i class="fas fa-cross text-blue-600 text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Retiro Espiritual</h3>
+                        <p class="text-gray-600 mb-4">Um fim de semana de renovação espiritual na Serra da Mantiqueira. Inclui estudos bíblicos, momentos de oração e comunhão.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-500">
+                                <i class="fas fa-clock mr-2"></i>
+                                <span>8:00 - 18:00</span>
+                            </div>
+                            <a href="#" class="text-blue-600 font-medium hover:underline">Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="event-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="h-48 bg-green-100 flex items-center justify-center relative">
+                        <div class="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-lg">
+                            <span class="font-bold text-lg">22</span>
+                            <span class="block text-xs">JUN</span>
+                        </div>
+                        <i class="fas fa-music text-green-600 text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Noite de Louvor</h3>
+                        <p class="text-gray-600 mb-4">Uma noite especial de adoração com nossa banda e convidados especiais. Traga sua família e amigos para esse momento de celebração.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-500">
+                                <i class="fas fa-clock mr-2"></i>
+                                <span>19:30 - 21:30</span>
+                            </div>
+                            <a href="#" class="text-blue-600 font-medium hover:underline">Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 3 -->
+                <div class="event-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="h-48 bg-purple-100 flex items-center justify-center relative">
+                        <div class="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-lg">
+                            <span class="font-bold text-lg">30</span>
+                            <span class="block text-xs">JUN</span>
+                        </div>
+                        <i class="fas fa-utensils text-purple-600 text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Jantar Beneficente</h3>
+                        <p class="text-gray-600 mb-4">Arrecadação de fundos para nosso projeto de assistência a famílias carentes. Cardápio especial e apresentações culturais.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-gray-500">
+                                <i class="fas fa-clock mr-2"></i>
+                                <span>20:00 - 23:00</span>
+                            </div>
+                            <a href="#" class="text-blue-600 font-medium hover:underline">Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition duration-300">Ver todos os eventos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Entre em Contato</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Tem dúvidas ou precisa de mais informações? Estamos aqui para ajudar.</p>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Nome</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Seu nome">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="seu@email.com">
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Assunto</label>
+                            <select id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                                <option value="">Selecione um assunto</option>
+                                <option value="prayer">Pedido de Oração</option>
+                                <option value="visit">Visitação Pastoral</option>
+                                <option value="ministry">Informações sobre Ministérios</option>
+                                <option value="event">Informações sobre Eventos</option>
+                                <option value="other">Outro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Mensagem</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Sua mensagem..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition duration-300">Enviar Mensagem</button>
+                    </form>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-gray-100 p-8 rounded-lg h-full">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Informações de Contato</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-1">Endereço</h4>
+                                    <p class="text-gray-600">Rua da Fé, 123 - Centro<br>São Paulo - SP, 01001-000</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone-alt text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-1">Telefone</h4>
+                                    <p class="text-gray-600">(11) 1234-5678<br>(11) 98765-4321 (WhatsApp)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-1">Email</h4>
+                                    <p class="text-gray-600">contato@igrejadivinoespiritosanto.com.br<br>secretaria@igrejadivinoespiritosanto.com.br</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-clock text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-1">Horário de Funcionamento</h4>
+                                    <p class="text-gray-600">Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 12h<br>Domingo: Cultos às 9h e 19h</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-bold text-gray-800 mb-4">Siga-nos nas Redes Sociais</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition duration-300">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition duration-300">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="bg-blue-400 text-white p-3 rounded-full hover:bg-blue-500 transition duration-300">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition duration-300">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <div class="h-96 w-full">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.0754267452926!2d-46.6534265844756!3d-23.565734367638785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1686783189654!5m2!1spt-BR!2sbr" 
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-church text-3xl text-blue-400"></i>
+                        <h3 class="text-2xl font-bold">Igreja do Divino Espírito Santo</h3>
+                    </div>
+                    <p class="text-gray-400">Uma comunidade de fé, esperança e amor, servindo a Deus e ao próximo desde 1950.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Início</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">Sobre Nós</a></li>
+                        <li><a href="#ministries" class="text-gray-400 hover:text-white transition duration-300">Ministérios</a></li>
+                        <li><a href="#events" class="text-gray-400 hover:text-white transition duration-300">Eventos</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Horários</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex justify-between">
+                            <span>Domingo</span>
+                            <span>9h e 19h</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Quarta-feira</span>
+                            <span>19h30</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sexta-feira</span>
+                            <span>20h</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Escola Bíblica</span>
+                            <span>Dom 10h30</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Inscreva-se para receber nossas novidades e eventos.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Seu email" class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-800 w-full">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400">© 2023 Igreja do Divino Espírito Santo. Todos os direitos reservados.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Termos de Uso</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Carousel Functionality
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        
+        let currentIndex = 0;
+        let intervalId;
+        
+        function showSlide(index) {
+            // Hide all slides
+            carouselItems.forEach(item => item.classList.add('hidden'));
+            indicators.forEach(indicator => indicator.classList.remove('bg-opacity-100'));
+            
+            // Show current slide
+            carouselItems[index].classList.remove('hidden');
+            indicators[index].classList.add('bg-opacity-100');
+            
+            currentIndex = index;
+        }
+        
+        function nextSlide() {
+            let newIndex = (currentIndex + 1) % carouselItems.length;
+            showSlide(newIndex);
+        }
+        
+        function prevSlide() {
+            let newIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+            showSlide(newIndex);
+        }
+        
+        function startAutoSlide() {
+            intervalId = setInterval(nextSlide, 5000);
+        }
+        
+        function resetAutoSlide() {
+            clearInterval(intervalId);
+            startAutoSlide();
+        }
+        
+        // Event Listeners
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetAutoSlide();
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetAutoSlide();
+        });
+        
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+                resetAutoSlide();
+            });
+        });
+        
+        // Initialize
+        showSlide(0);
+        startAutoSlide();
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
