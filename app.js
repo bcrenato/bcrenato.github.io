@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     registrationDate: new Date().toISOString()
                 };
 
-                const newMemberRef = push(ref(db, 'membros'));
+                const newMemberRef = push(ref(db, 'cadmembros'));
                 await set(newMemberRef, formData);
 
                 document.getElementById('successModal').classList.remove('hidden');
