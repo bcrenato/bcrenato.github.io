@@ -431,5 +431,24 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
     <script src="app.js"></script>
+
+    
+    <script>
+      const inputFoto = document.getElementById("foto");
+      const preview = document.getElementById("preview");
+    
+      inputFoto.addEventListener("change", () => {
+        const file = inputFoto.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = e => {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    </script>
+
 </body>
 </html>
