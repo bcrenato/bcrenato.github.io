@@ -1,36 +1,67 @@
-// Configuração do Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
-  authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
-  databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
-  projectId: "cadastro-membros-c5cd4",
-  storageBucket: "cadastro-membros-c5cd4.firebasestorage.app",
-  messagingSenderId: "250346042791",
-  appId: "1:250346042791:web:6bc469b844de69e526b282"
-};
+// Importações do Firebase
+import { db } from './firebase-config.js';
+import { ref, push, set } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-// Inicializar Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+// Configuração do Cloudinary
+const CLOUDINARY_UPLOAD_PRESET = 'igreja_preset'; // Substitua pelo seu
+const CLOUDINARY_CLOUD_NAME = 'bcrenato'; // Substitua pelo seu
+const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
-// Função para upload no Cloudinary
-async function uploadImagemCloudinary(file) {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "igreja_preset"); // substitua pelo seu preset real
-
-  const response = await fetch("https://api.cloudinary.com/v1_1/bcrenato/image/upload", {
-    method: "POST",
-    body: formData
-  });
-
-  if (!response.ok) throw new Error("Erro no upload da imagem");
-  const data = await response.json();
-  return data.secure_url;
+// Função para upload de imagem no Cloudinary
+async function uploadImageToCloudinary(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    
+    try {
+        const response = await fetch(CLOUDINARY_UPLOAD_URL, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('Falha no upload da imagem');
+        }
+        
+        const data = await response.json();
+        return data.secure_url;
+    } catch (error) {
+        console.error('Erro ao enviar imagem:', error);
+        throw error;
+    }
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
+    // Elementos da foto
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+    const removePhoto = document.getElementById('removePhoto');
+    let photoFile = null;
+
+    // Configuração do preview da foto
+    photoInput.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+            photoFile = e.target.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                photoPreview.src = event.target.result;
+                removePhoto.classList.remove('hidden');
+            };
+            
+            reader.readAsDataURL(photoFile);
+        }
+    });
+
+    // Remover foto selecionada
+    removePhoto.addEventListener('click', function(e) {
+        e.preventDefault();
+        photoPreview.src = 'https://via.placeholder.com/150';
+        photoInput.value = '';
+        photoFile = null;
+        removePhoto.classList.add('hidden');
+    });
+
     // Form steps navigation
     const nextButtons = document.querySelectorAll('.next-step');
     const prevButtons = document.querySelectorAll('.prev-step');
@@ -142,68 +173,82 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return isValid;
     }
-    
+
     // Form submission
     const form = document.getElementById('memberForm');
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         if (validateStep(currentStep)) {
-            // Coletar todos os dados do formulário
-            const formData = {
-                personal: {
-                    fullName: document.getElementById('fullName').value.trim(),
-                    birthDate: document.getElementById('birthDate').value,
-                    cpf: document.getElementById('cpf').value.trim(),
-                    rg: document.getElementById('rg').value.trim(),
-                    phone: document.getElementById('phone').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    maritalStatus: document.querySelector('select[name="maritalStatus"]').value,
-                    gender: document.querySelector('input[name="gender"]:checked')?.value
-                },
-                address: {
-                    cep: document.getElementById('cep').value.trim(),
-                    street: document.getElementById('street').value.trim(),
-                    number: document.getElementById('number').value.trim(),
-                    complement: document.getElementById('complement').value.trim(),
-                    neighborhood: document.getElementById('neighborhood').value.trim(),
-                    city: document.getElementById('city').value.trim(),
-                    state: document.getElementById('state').value
-                },
-                spiritual: {
-                    baptismDate: document.getElementById('baptismDate').value,
-                    baptismChurch: document.getElementById('baptismChurch').value.trim(),
-                    conversionDate: document.getElementById('conversionDate').value,
-                    previousReligion: document.getElementById('previousReligion').value.trim(),
-                    ministry: Array.from(document.querySelectorAll('input[name="ministry"]:checked')).map(el => el.value),
-                    spiritualGifts: document.getElementById('spiritualGifts').value.trim(),
-                    testimony: document.getElementById('testimony').value.trim()
-                },
-                registrationDate: new Date().toISOString()
-            };
+            try {
+                let photoURL = null;
+                
+                // Se houver foto, fazer upload para o Cloudinary
+                if (photoFile) {
+                    photoURL = await uploadImageToCloudinary(photoFile);
+                }
 
-            // Enviar para o Firebase
-            const ref = database.ref('cadmembros').push();
-            ref.set(formData)
-                .then(() => {
-                    // Show success modal
-                    document.getElementById('successModal').classList.remove('hidden');
-                    form.reset();
-                    currentStep = 1;
-                    updateForm();
-                })
-                .catch((error) => {
-                    console.error("Erro ao cadastrar:", error);
-                    alert("Ocorreu um erro ao cadastrar. Por favor, tente novamente.");
-                });
+                // Coletar todos os dados do formulário
+                const formData = {
+                    personal: {
+                        fullName: document.getElementById('fullName').value.trim(),
+                        birthDate: document.getElementById('birthDate').value,
+                        cpf: document.getElementById('cpf').value.trim(),
+                        rg: document.getElementById('rg').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        maritalStatus: document.querySelector('select[name="maritalStatus"]').value,
+                        gender: document.querySelector('input[name="gender"]:checked')?.value,
+                        photoURL: photoURL
+                    },
+                    address: {
+                        cep: document.getElementById('cep').value.trim(),
+                        street: document.getElementById('street').value.trim(),
+                        number: document.getElementById('number').value.trim(),
+                        complement: document.getElementById('complement').value.trim(),
+                        neighborhood: document.getElementById('neighborhood').value.trim(),
+                        city: document.getElementById('city').value.trim(),
+                        state: document.getElementById('state').value
+                    },
+                    spiritual: {
+                        baptismDate: document.getElementById('baptismDate').value,
+                        baptismChurch: document.getElementById('baptismChurch').value.trim(),
+                        conversionDate: document.getElementById('conversionDate').value,
+                        previousReligion: document.getElementById('previousReligion').value.trim(),
+                        ministry: Array.from(document.querySelectorAll('input[name="ministry"]:checked')).map(el => el.value),
+                        spiritualGifts: document.getElementById('spiritualGifts').value.trim(),
+                        testimony: document.getElementById('testimony').value.trim()
+                    },
+                    registrationDate: new Date().toISOString()
+                };
+
+                // Enviar para o Firebase
+                const memberRef = push(ref(db, 'membros'));
+                await set(memberRef, formData);
+
+                // Mostrar modal de sucesso
+                document.getElementById('successModal').classList.remove('hidden');
+                
+                // Resetar formulário
+                form.reset();
+                photoPreview.src = 'https://via.placeholder.com/150';
+                photoFile = null;
+                removePhoto.classList.add('hidden');
+                currentStep = 1;
+                updateForm();
+                
+            } catch (error) {
+                console.error("Erro ao cadastrar:", error);
+                alert("Ocorreu um erro ao cadastrar. Por favor, tente novamente.");
+            }
         }
     });
-    
-    // Close modal
+
+    // Fechar modal
     document.getElementById('closeModal').addEventListener('click', function() {
         document.getElementById('successModal').classList.add('hidden');
     });
-    
+
     // CEP search functionality
     document.getElementById('searchCep').addEventListener('click', function() {
         const cepInput = document.getElementById('cep');
