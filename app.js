@@ -13,6 +13,23 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
+// Função para upload no Cloudinary
+async function uploadImagemCloudinary(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "igreja_preset"); // substitua pelo seu preset real
+
+  const response = await fetch("https://api.cloudinary.com/v1_1/bcrenato/image/upload", {
+    method: "POST",
+    body: formData
+  });
+
+  if (!response.ok) throw new Error("Erro no upload da imagem");
+  const data = await response.json();
+  return data.secure_url;
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Form steps navigation
     const nextButtons = document.querySelectorAll('.next-step');
