@@ -13,6 +13,30 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
+
+
+// UPLOAD IMAGEM NO CLOYDINARY
+async function uploadImagemCloudinary(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "igreja_preset"); // seu preset
+
+  const response = await fetch("https://api.cloudinary.com/v1_1/bcrenato/image/upload", {
+    method: "POST",
+    body: formData
+  });
+
+  if (!response.ok) throw new Error("Erro no upload da imagem");
+  const data = await response.json();
+  return data.secure_url;
+}
+
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Form steps navigation
     const nextButtons = document.querySelectorAll('.next-step');
@@ -78,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function validateStep(step) {
         let isValid = true;
         const currentStepContent = document.querySelector(`.step-content[data-step="${step}"]`);
+
         
         // Check required fields in current step
         const requiredInputs = currentStepContent.querySelectorAll('[required]');
@@ -167,6 +192,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Enviar para o Firebase
             const ref = database.ref('membros').push();
+
+
+            
+
+            const fotoInput = document.getElementById("foto");
+            const fotoFile = fotoInput.files[0];
+            if (!fotoFile) {
+              alert("Por favor, selecione uma foto.");
+              return;
+            }
+            const fotoURL = await uploadImagemCloudinary(fotoFile);
+            formData.personal.fotoURL = fotoURL;
+
+
+            
             ref.set(formData)
                 .then(() => {
                     // Show success modal
@@ -174,6 +214,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     form.reset();
                     currentStep = 1;
                     updateForm();
+
+                    // 🧽 Limpar imagem e miniatura
+                    document.getElementById("preview").src = "";
+                    document.getElementById("preview").style.display = "none";
+                    document.getElementById("foto").value = "";
                 })
                 .catch((error) => {
                     console.error("Erro ao cadastrar:", error);
