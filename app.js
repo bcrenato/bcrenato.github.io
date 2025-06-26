@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             // Enviar para o Firebase
-            const ref = database.ref('membros').push();
+            const ref = database.ref('cadmembros').push();
             ref.set(formData)
                 .then(() => {
                     // Show success modal
