@@ -1,12 +1,12 @@
 // Configuração do Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyAm7J99HoC-_ccqqTL6ORSKe0mPCVebyH8",
-    authDomain: "cadastro-firebase-22bb0.firebaseapp.com",
-    databaseURL: "https://cadastro-firebase-22bb0-default-rtdb.firebaseio.com",
-    projectId: "cadastro-firebase-22bb0",
-    storageBucket: "cadastro-firebase-22bb0.firebasestorage.app",
-    messagingSenderId: "476708455498",
-    appId: "1:476708455498:web:7504f49d3e5829354f52b3"
+  apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
+  authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
+  databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
+  projectId: "cadastro-membros-c5cd4",
+  storageBucket: "cadastro-membros-c5cd4.firebasestorage.app",
+  messagingSenderId: "250346042791",
+  appId: "1:250346042791:web:6bc469b844de69e526b282"
 };
 
 // Inicializar Firebase
