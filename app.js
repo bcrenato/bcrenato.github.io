@@ -39,13 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let photoFile = null;
 
     // Configuração do preview da foto
+    // Substitua o evento atual por este:
     photoInput.addEventListener('change', function(e) {
-        if (e.target.files && e.target.files[0]) {
-            photoFile = e.target.files[0];
+        if (this.files && this.files[0]) {
+            photoFile = this.files[0];
             const reader = new FileReader();
             
-            reader.onload = function(event) {
-                photoPreview.src = event.target.result;
+            reader.onload = function(e) {
+                photoPreview.src = e.target.result;
+                photoPreview.style.display = 'block';
                 removePhoto.classList.remove('hidden');
             };
             
@@ -53,7 +55,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Remover foto selecionada
+    // import { db } from './firebase-config.js';
+import { ref, push, set } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+// Configuração do Cloudinary
+const CLOUDINARY_UPLOAD_PRESET = 'igreja_preset';
+const CLOUDINARY_CLOUD_NAME = 'bcrenato';
+const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+async function uploadImageToCloudinary(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    
+    const response = await fetch(CLOUDINARY_UPLOAD_URL, {
+        method: 'POST',
+        body: formData
+    });
+    
+    if (!response.ok) throw new Error('Falha no upload da imagem');
+    return await response.json();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+    const removePhoto = document.getElementById('removePhoto');
+    let photoFile = null;
+
+    // Preview da foto
+    photoInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            photoFile = this.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                photoPreview.src = e.target.result;
+                photoPreview.style.display = 'block';
+                removePhoto.classList.remove('hidden');
+            };
+            
+            reader.readAsDataURL(photoFile);
+        }
+    });
+
+    // Remover foto
     removePhoto.addEventListener('click', function(e) {
         e.preventDefault();
         photoPreview.src = 'https://via.placeholder.com/150';
@@ -181,14 +227,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (validateStep(currentStep)) {
             try {
+                const submitButton = e.target.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Salvando...';
+
                 let photoURL = null;
-                
-                // Se houver foto, fazer upload para o Cloudinary
                 if (photoFile) {
-                    photoURL = await uploadImageToCloudinary(photoFile);
+                    const result = await uploadImageToCloudinary(photoFile);
+                    photoURL = result.secure_url;
                 }
 
-                // Coletar todos os dados do formulário
                 const formData = {
                     personal: {
                         fullName: document.getElementById('fullName').value.trim(),
@@ -222,14 +271,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     registrationDate: new Date().toISOString()
                 };
 
-                // Enviar para o Firebase
-                const memberRef = push(ref(db, 'membros'));
-                await set(memberRef, formData);
+                const newMemberRef = push(ref(db, 'membros'));
+                await set(newMemberRef, formData);
 
-                // Mostrar modal de sucesso
                 document.getElementById('successModal').classList.remove('hidden');
-                
-                // Resetar formulário
                 form.reset();
                 photoPreview.src = 'https://via.placeholder.com/150';
                 photoFile = null;
@@ -238,8 +283,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateForm();
                 
             } catch (error) {
-                console.error("Erro ao cadastrar:", error);
-                alert("Ocorreu um erro ao cadastrar. Por favor, tente novamente.");
+                console.error("Erro no cadastro:", error);
+                alert("Erro ao cadastrar: " + error.message);
+            } finally {
+                const submitButton = form.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalText;
+                }
             }
         }
     });
