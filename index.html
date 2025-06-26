@@ -64,19 +64,8 @@
                     <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
                         <i class="fas fa-user-circle mr-2 text-indigo-500"></i> Dados Pessoais
                     </h2>
-                    <div class="flex flex-col items-center gap-6">
-                     <!-- Foto do membro -->
-                        <div class="text-center mb-6">
-                          <img id="preview" class="rounded-full mx-auto mb-2" style="width: 120px; height: 120px; object-fit: cover; display: none;" alt="Foto">
-                          <label for="foto" class="inline-block cursor-pointer px-4 py-2 bg-indigo-100 text-indigo-600 rounded-lg hover:bg-indigo-200">
-                            <i class="fas fa-camera mr-2"></i>Selecionar / Tirar Foto
-                            <input type="file" id="foto" name="foto" accept="image/*" class="hidden" required>
-                          </label>
-                        </div>
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                       
-
-                        
                         <div>
                             <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo*</label>
                             <div class="relative">
@@ -431,24 +420,5 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
     <script src="app.js"></script>
-
-    
-    <script>
-      const inputFoto = document.getElementById("foto");
-      const preview = document.getElementById("preview");
-    
-      inputFoto.addEventListener("change", () => {
-        const file = inputFoto.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = e => {
-            preview.src = e.target.result;
-            preview.style.display = "block";
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-    </script>
-
 </body>
 </html>
