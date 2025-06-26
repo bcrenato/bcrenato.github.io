@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualização de Membros - Igreja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --light-gray: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .table-header {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .table-row:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .table-row:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 0.65rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .badge-primary {
+            background-color: #e0e7ff;
+            color: var(--primary);
+        }
+        
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            background-color: var(--primary);
+        }
+        
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        
+        .detail-card {
+            border-left: 4px solid var(--primary);
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navbar -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-white bg-opacity-20 rounded-lg">
+                        <i class="fas fa-church text-xl"></i>
+                    </div>
+                    <span class="text-xl font-semibold">Igreja Cristã</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-gray-100 transition flex items-center shadow-sm">
+                        <i class="fas fa-plus-circle mr-2"></i>Novo Cadastro
+                    </a>
+                    <button class="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                    <i class="fas fa-users mr-3 text-indigo-500"></i>Membros Cadastrados
+                </h1>
+                <p class="text-gray-600">Gerencie todos os membros da comunidade</p>
+            </div>
+            <div class="mt-4 md:mt-0 flex items-center space-x-3">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar membros..." 
+                        class="search-input pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-0 w-full md:w-64">
+                </div>
+                <button id="exportBtn" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center">
+                    <i class="fas fa-file-export mr-2"></i>Exportar
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="card p-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">Total de Membros</p>
+                        <h3 class="text-2xl font-bold mt-1" id="totalMembers">0</h3>
+                    </div>
+                    <div class="p-3 bg-indigo-100 rounded-lg text-indigo-600">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card p-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">Homens</p>
+                        <h3 class="text-2xl font-bold mt-1" id="maleMembers">0</h3>
+                    </div>
+                    <div class="p-3 bg-blue-100 rounded-lg text-blue-600">
+                        <i class="fas fa-male text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card p-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">Mulheres</p>
+                        <h3 class="text-2xl font-bold mt-1" id="femaleMembers">0</h3>
+                    </div>
+                    <div class="p-3 bg-pink-100 rounded-lg text-pink-600">
+                        <i class="fas fa-female text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card p-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">Novos (30 dias)</p>
+                        <h3 class="text-2xl font-bold mt-1" id="newMembers">0</h3>
+                    </div>
+                    <div class="p-3 bg-green-100 rounded-lg text-green-600">
+                        <i class="fas fa-user-plus text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="card overflow-hidden">
+            <!-- Table Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-6 border-b">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-lg font-semibold">Lista Completa de Membros</h3>
+                    <p class="text-sm text-gray-500" id="showingText">Mostrando 0 de 0 membros</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <select id="filterSelect" class="px-4 py-2 border border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-0 text-sm">
+                        <option value="all">Todos</option>
+                        <option value="masculino">Homens</option>
+                        <option value="feminino">Mulheres</option>
+                        <option value="batizado">Batizados</option>
+                        <option value="novo">Novos (30 dias)</option>
+                    </select>
+                    <div class="flex items-center space-x-2">
+                        <button id="prevPage" class="px-3 py-1 border rounded-lg bg-gray-50 disabled:opacity-50">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span id="pageInfo" class="px-3 py-1 text-sm">Página 1</span>
+                        <button id="nextPage" class="px-3 py-1 border rounded-lg bg-gray-50 disabled:opacity-50">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="table-header">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                Membro
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                Contato
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                Localização
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">
+                                Ações
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="membersTable">
+                        <!-- Dados serão inseridos aqui via JavaScript -->
+                        <tr>
+                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                <i class="fas fa-spinner fa-spin mr-2"></i> Carregando membros...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Table Footer -->
+            <div class="px-6 py-4 border-t flex flex-col md:flex-row justify-between items-center bg-gray-50">
+                <div class="text-sm text-gray-600 mb-4 md:mb-0" id="tableInfo">
+                    Mostrando <span class="font-medium">0</span> a <span class="font-medium">0</span> de <span class="font-medium">0</span> membros
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-600">Itens por página:</span>
+                    <select id="perPageSelect" class="px-2 py-1 border border-gray-300 rounded text-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Member Details Modal -->
+    <div id="memberModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto animate-fade-in shadow-2xl">
+                <div class="sticky top-0 bg-white z-10 p-6 border-b flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                        <i class="fas fa-user-circle mr-3 text-indigo-500"></i>
+                        <span id="modalTitle">Detalhes do Membro</span>
+                    </h3>
+                    <button id="closeMemberModal" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="p-6" id="memberDetails">
+                    <!-- Conteúdo será preenchido via JavaScript -->
+                </div>
+                
+                <div class="sticky bottom-0 bg-white border-t p-4 flex justify-end space-x-3">
+                    <button id="printMember" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center">
+                        <i class="fas fa-print mr-2"></i>Imprimir
+                    </button>
+                    <button id="editMember" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center">
+                        <i class="fas fa-edit mr-2"></i>Editar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl w-full max-w-md p-6 animate-fade-in shadow-2xl">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                        <i class="fas fa-exclamation-triangle text-red-600"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 mt-3" id="deleteModalTitle">Excluir membro</h3>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500">Tem certeza que deseja excluir este membro? Todos os dados serão permanentemente removidos.</p>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-end space-x-3">
+                    <button id="cancelDelete" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                        Cancelar
+                    </button>
+                    <button id="confirmDelete" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                        Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <script src="visualizar.js"></script>
+</body>
+</html>
