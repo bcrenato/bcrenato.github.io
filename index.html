@@ -1,35 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Meu PWA com OneSignal</title>
-
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#317EFB"/>
-
-<!-- OneSignal SDK -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "e67a2e21-b9d8-4626-9e73-91025f9438b3",
-    });
-  });
-</script>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 50px;
-}
-</style>
+<meta charset="UTF-8">
+<title>PWA Notificações</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.json">
 </head>
-
 <body>
-<h1>🎉 PWA com OneSignal</h1>
-<p>Permita as notificações para receber novidades!</p>
+<h1>PWA com Firebase 9.23</h1>
+<button id="permitir">Permitir Notificações</button>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCv6pzl34tyPTARtGxV6g2AJfkrtQeA-xU",
+  authDomain: "cadastro-igreja-23042.firebaseapp.com",
+  databaseURL: "https://cadastro-igreja-23042-default-rtdb.firebaseio.com",
+  projectId: "cadastro-igreja-23042",
+  storageBucket: "cadastro-igreja-23042.firebasestorage.app",
+  messagingSenderId: "977906864836",
+  appId: "1:977906864836
+};
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js').then(() => {
+    console.log('Service Worker registrado');
+  });
+}
+
+document.getElementById('permitir').addEventListener('click', async () => {
+  try {
+    const token = await getToken(messaging, {
+      vapidKey: 'SUA_VAPID_KEY'
+    });
+    if (token) {
+      console.log('Token do dispositivo:', token);
+      alert(`Token obtido! Veja no console e use-o em enviar.html`);
+      localStorage.setItem('token', token);
+    } else {
+      console.log('Sem token disponível. Solicite permissão.');
+    }
+  } catch (err) {
+    console.error('Erro ao obter token', err);
+  }
+});
+
+onMessage(messaging, (payload) => {
+  console.log('Mensagem recebida (foreground):', payload);
+  alert(`${payload.notification.title}: ${payload.notification.body}`);
+});
+</script>
 </body>
 </html>
