@@ -1,6 +1,6 @@
 {
-  "name": "PWA Teste Simples",
-  "short_name": "PWA Teste",
+  "name": "PWA Firebase Push Teste",
+  "short_name": "PWA Push",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
