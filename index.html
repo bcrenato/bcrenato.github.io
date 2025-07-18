@@ -9,13 +9,12 @@
 <meta name="theme-color" content="#317EFB"/>
 
 <!-- OneSignal SDK -->
-<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
-  window.OneSignal = window.OneSignal || [];
-  OneSignal.push(function() {
-    OneSignal.init({
-      appId: "SEU-APP-ID-AQUI",  // <<< substitua pelo App ID do OneSignal
-      notifyButton: { enable: true }
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "e67a2e21-b9d8-4626-9e73-91025f9438b3",
     });
   });
 </script>
