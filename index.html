@@ -36,7 +36,7 @@ if ('serviceWorker' in navigator) {
 document.getElementById('permitir').addEventListener('click', async () => {
   try {
     const token = await getToken(messaging, {
-      vapidKey: 'SUA_VAPID_KEY'
+      vapidKey: 'BFBqbUaRosOn6954OA7OgVwC1I-YIsMlRjBSLDDCkfxT7BYVpqIJHmxpJkYVPYnSQftVVkrRqKPrjuJfodnjFF4'
     });
     if (token) {
       console.log('Token do dispositivo:', token);
