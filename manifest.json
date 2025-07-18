@@ -1,11 +1,10 @@
 {
-  "name": "PWA Notificações",
-  "short_name": "Notificações",
-  "start_url": "/index.html",
-  "scope": "/",
+  "name": "PWA Teste Simples",
+  "short_name": "PWA Teste",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#007bff",
+  "theme_color": "#317EFB",
   "icons": [
     {
       "src": "icons/icon-192x192.png",
