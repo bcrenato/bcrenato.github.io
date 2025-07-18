@@ -1,11 +1,11 @@
 {
-  "name": "Meu PWA com OneSignal",
-  "short_name": "PWA",
-  "start_url": ".",
+  "name": "PWA Notificações",
+  "short_name": "Notificações",
+  "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#317EFB",
-  "gcm_sender_id": "482941778795",
+  "theme_color": "#007bff",
   "icons": [
     {
       "src": "icons/icon-192x192.png",
