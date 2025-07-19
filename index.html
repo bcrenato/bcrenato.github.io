@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PWA com Notificações Firebase</title>
   <link rel="manifest" href="manifest.json" />
+
+  <!-- Firebase App + Messaging + Database compat (versão 9.23.0) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
   <style>
     body { font-family: Arial, sans-serif; margin: 2rem; }
   </style>
@@ -15,49 +19,62 @@
   <h1>PWA Firebase Push Teste</h1>
   <p id="status">Inicializando...</p>
 
-  <script src="firebase-config.js"></script>
   <script>
+    // Configuração Firebase (mova para arquivo separado se quiser)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
+      authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
+      databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
+      projectId: "cadastro-membros-c5cd4",
+      storageBucket: "cadastro-membros-c5cd4.appspot.com",
+      messagingSenderId: "250346042791",
+      appId: "1:250346042791:web:6bc469b844de69e526b282"
+    };
+
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+
     const statusEl = document.getElementById('status');
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
       .then(registration => {
         statusEl.textContent = 'Service Worker registrado!';
+
         const messaging = firebase.messaging();
 
-       Notification.requestPermission()
-.then(permission => {
-  if (permission === 'granted') {
-    statusEl.textContent = 'Permissão concedida para notificações.';
-    return messaging.getToken({ serviceWorkerRegistration: registration });
-  } else {
-    throw new Error('Permissão negada para notificações');
-  }
-})
+        // Solicita permissão para notificações com API nativa do navegador
+        return Notification.requestPermission()
+          .then(permission => {
+            if (permission === 'granted') {
+              statusEl.textContent = 'Permissão concedida para notificações. Gerando token...';
+              return messaging.getToken({ serviceWorkerRegistration: registration });
+            } else {
+              throw new Error('Permissão negada para notificações');
+            }
+          });
+      })
+      .then(token => {
+        statusEl.textContent = 'Token FCM gerado: ' + token;
+        console.log('Token FCM:', token);
 
-        .then(token => {
-          statusEl.textContent = 'Token FCM gerado: ' + token;
-          console.log('Token FCM:', token);
-          // Salve o token no Firebase Realtime Database
-          const dbRef = firebase.database().ref('tokens');
-          dbRef.push(token);
-        })
-        .catch(err => {
-          statusEl.textContent = 'Erro na permissão: ' + err;
-          console.error(err);
-        });
-
-        messaging.onMessage(payload => {
-          console.log('Mensagem recebida: ', payload);
-          alert('Notificação recebida: ' + payload.notification.title);
-        });
+        // Salva token no Realtime Database
+        const dbRef = firebase.database().ref('tokens');
+        dbRef.push(token);
       })
       .catch(err => {
-        statusEl.textContent = 'Falha ao registrar Service Worker: ' + err;
+        statusEl.textContent = 'Erro: ' + err.message;
         console.error(err);
       });
+
+      // Escuta mensagens recebidas enquanto a página estiver aberta
+      firebase.messaging().onMessage(payload => {
+        console.log('Mensagem recebida: ', payload);
+        alert('Notificação recebida: ' + payload.notification.title);
+      });
+
     } else {
-      statusEl.textContent = 'Service Worker não suportado.';
+      statusEl.textContent = 'Service Worker não suportado neste navegador.';
     }
   </script>
 </body>
