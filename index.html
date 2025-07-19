@@ -25,7 +25,7 @@
         statusEl.textContent = 'Service Worker registrado!';
         const messaging = firebase.messaging();
 
-        messaging.useServiceWorker(registration);
+      
 
         messaging.requestPermission()
         .then(() => {
