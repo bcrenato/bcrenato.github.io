@@ -25,12 +25,10 @@
         statusEl.textContent = 'Service Worker registrado!';
         const messaging = firebase.messaging();
 
-        messaging.useServiceWorker(registration);
-
         messaging.requestPermission()
         .then(() => {
           statusEl.textContent = 'Permissão concedida para notificações.';
-          return messaging.getToken();
+          return messaging.getToken({ serviceWorkerRegistration: registration });
         })
         .then(token => {
           statusEl.textContent = 'Token FCM gerado: ' + token;
