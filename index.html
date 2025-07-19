@@ -3,81 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PWA com Notificações Firebase</title>
+  <title>PWA de Teste</title>
   <link rel="manifest" href="manifest.json" />
-
-  <!-- Firebase scripts compat -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
+  <meta name="theme-color" content="#317EFB" />
   <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
-    button { padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer; }
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    h1 { color: #317EFB; }
   </style>
 </head>
 <body>
-  <h1>PWA Firebase Push Teste</h1>
-  <p id="status">Clique no botão para ativar notificações</p>
-  <button id="btnAtivar">Ativar Notificações</button>
+  <h1>Olá, PWA Teste!</h1>
+  <p>Esse é um PWA básico para testes.</p>
 
   <script>
-    // Config Firebase (pode separar em arquivo)
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
-      authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
-      databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
-      projectId: "cadastro-membros-c5cd4",
-      storageBucket: "cadastro-membros-c5cd4.appspot.com",
-      messagingSenderId: "250346042791",
-      appId: "1:250346042791:web:6bc469b844de69e526b282"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    const statusEl = document.getElementById('status');
-    const btnAtivar = document.getElementById('btnAtivar');
-
     if ('serviceWorker' in navigator) {
-      let messaging;
-      navigator.serviceWorker.register('service-worker.js').then(registration => {
-        messaging = firebase.messaging();
-
-        btnAtivar.addEventListener('click', async () => {
-          statusEl.textContent = 'Solicitando permissão...';
-
-          const permission = await Notification.requestPermission();
-
-          if (permission === 'granted') {
-            statusEl.textContent = 'Permissão concedida! Gerando token...';
-            const token = await messaging.getToken({ serviceWorkerRegistration: registration });
-            statusEl.textContent = 'Token FCM: ' + token;
-
-            console.log('Token FCM:', token);
-
-            // Salvar token no Realtime Database
-            const dbRef = firebase.database().ref('tokens');
-            dbRef.push(token);
-          } else if (permission === 'denied') {
-            statusEl.textContent = 'Permissão negada. Para ativar, ajuste nas configurações do navegador.';
-            alert('Você negou a permissão para notificações.');
-          } else {
-            statusEl.textContent = 'Permissão para notificações não concedida.';
-          }
-        });
-
-        // Escutar notificações recebidas com página ativa
-        messaging.onMessage(payload => {
-          console.log('Mensagem recebida: ', payload);
-          alert('Notificação recebida: ' + payload.notification.title);
-        });
-
-      }).catch(err => {
-        statusEl.textContent = 'Falha ao registrar Service Worker: ' + err;
-        console.error(err);
-      });
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker registrado com sucesso!'))
+        .catch(err => console.error('Falha ao registrar Service Worker:', err));
     } else {
-      statusEl.textContent = 'Service Worker não suportado neste navegador.';
-      btnAtivar.disabled = true;
+      console.log('Service Worker não suportado nesse navegador.');
     }
   </script>
 </body>
