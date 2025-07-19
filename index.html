@@ -1,64 +1,66 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PWA com Notificações Firebase</title>
-  <link rel="manifest" href="manifest.json" />
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWA com Notificações Firebase</title>
+<link rel="manifest" href="manifest.json">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; margin: 2rem; }
+</style>
 </head>
 <body>
-  <h1>PWA Firebase Push Teste</h1>
-  <p id="status">Inicializando...</p>
+<h1>PWA Firebase Push Teste</h1>
+<p id="status">Inicializando…</p>
 
-  <script src="firebase-config.js"></script>
-  <script>
-    const statusEl = document.getElementById('status');
+<script src="firebase-config.js"></script>
+<script>
+const statusEl = document.getElementById('status');
+const vapidKey = 'BK1Vsw-Pp7cMx2ejEA8iA5_g2JIVp157aiA60UNT7d40Zj9OgSBsNuEios8SwmKDpCR8GgmLjUBxAuF8brKZRWI'; // 🔷 Pegue no Firebase Console → Cloud Messaging → Chave pública para Web Push
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-      .then(registration => {
-        statusEl.textContent = 'Service Worker registrado!';
-        const messaging = firebase.messaging();
-
-      
-
-       Notification.requestPermission().then(permission => {
-  if (permission === 'granted') {
-    statusEl.textContent = 'Permissão concedida para notificações.';
-    return messaging.getToken();
-  } else {
-    throw new Error('Permissão para notificações não concedida.');
-  }
-})
-.then(token => {
-  statusEl.textContent = 'Token FCM gerado: ' + token;
-  console.log('Token FCM:', token);
-  const dbRef = firebase.database().ref('tokens');
-  dbRef.push(token);
-})
-.catch(err => {
-  statusEl.textContent = 'Erro: ' + err;
-  console.error(err);
-});
-
-
-        messaging.onMessage(payload => {
-          console.log('Mensagem recebida: ', payload);
-          alert('Notificação recebida: ' + payload.notification.title);
-        });
-      })
-      .catch(err => {
-        statusEl.textContent = 'Falha ao registrar Service Worker: ' + err;
-        console.error(err);
-      });
-    } else {
-      statusEl.textContent = 'Service Worker não suportado.';
+async function init() {
+  try {
+    if (!('serviceWorker' in navigator)) {
+      throw new Error('Service Worker não suportado.');
     }
-  </script>
+
+    const registration = await navigator.serviceWorker.register('service-worker.js');
+    console.log('✅ Service Worker registrado:', registration);
+
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      throw new Error('Permissão para notificações não concedida.');
+    }
+
+    const messaging = firebase.messaging();
+
+    const token = await messaging.getToken({
+      serviceWorkerRegistration: registration,
+      vapidKey
+    });
+
+    console.log('✅ Token FCM:', token);
+    statusEl.textContent = 'Token FCM gerado: ' + token;
+
+    // opcional: salvar no Firebase Realtime Database
+    const dbRef = firebase.database().ref('tokens');
+    dbRef.push(token);
+
+    messaging.onMessage(payload => {
+      console.log('📨 Mensagem recebida:', payload);
+      alert(`Notificação recebida: ${payload.notification.title}`);
+    });
+
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = '❌ Erro: ' + err.message;
+  }
+}
+
+init();
+</script>
 </body>
 </html>
