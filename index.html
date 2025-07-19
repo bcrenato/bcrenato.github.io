@@ -1,66 +1,22 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Membros</title>
+  <title>Meu PWA</title>
   <link rel="manifest" href="manifest.json">
-  <script type="module">
-    // Importações Firebase v9
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
-    import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js';
-    
-    // Sua configuração Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
-      authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
-      databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
-      projectId: "cadastro-membros-c5cd4",
-      storageBucket: "cadastro-membros-c5cd4.appspot.com",
-      messagingSenderId: "250346042791",
-      appId: "1:250346042791:web:6bc469b844de69e526b282"
-    };
-
-    // Inicialização
-    const app = initializeApp(firebaseConfig);
-    const messaging = getMessaging(app);
-
-    // Função para solicitar permissão
-    async function requestNotificationPermission() {
-      try {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-          const token = await getToken(messaging, { 
-            vapidKey: 'SUA_CHAVE_VAPID_AQUI' 
-          });
-          console.log('Token de notificação:', token);
-          return token;
-        }
-      } catch (error) {
-        console.error('Erro ao solicitar permissão:', error);
-      }
-    }
-
-    // Expor funções para uso global
-    window.firebaseApp = {
-      messaging,
-      requestNotificationPermission
-    };
-
-    // Ouvinte para mensagens em primeiro plano
-    onMessage(messaging, (payload) => {
-      console.log('Mensagem recebida:', payload);
-      new Notification(payload.notification.title, {
-        body: payload.notification.body,
-        icon: 'icons/icon-192x192.png'
-      });
-    });
-  </script>
-  <script src="app.js" defer></script>
+  <!-- Firebase App (opcional) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <!-- Outros serviços Firebase que você precise -->
 </head>
 <body>
-  <h1>Cadastro de Membros</h1>
-  <button id="notificationButton">Ativar Notificações</button>
-  <!-- Seu conteúdo principal aqui -->
+  <h1>Meu PWA</h1>
+  
+  <button id="enableNotifications">Ativar Notificações</button>
+
+  <!-- Supabase JS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
 </body>
 </html>
