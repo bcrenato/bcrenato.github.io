@@ -14,9 +14,12 @@ const firebaseConfig = {
   appId: "1:250346042791:web:6bc469b844de69e526b282"
 };
 
-// Inicializa o Firebase
-const app = firebase.initializeApp(firebaseConfig); // Correção aqui
-const messaging = firebase.messaging.getMessaging(app);
+// Inicialização do Firebase (modo compat)
+const app = firebase.initializeApp(firebaseConfig);
+
+// Obtenha a instância do Messaging CORRETAMENTE
+const messaging = firebase.messaging();
+
 
 // ================= Configuração Supabase =================
 const supabaseUrl = 'SUA_URL_SUPABASE';
@@ -28,19 +31,19 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js');
-      console.log('Service Worker registrado com sucesso:', registration);
-      
-      // Configura mensagens em foreground
-      firebase.messaging.onMessage(messaging, (payload) => {
+      console.log('Service Worker registrado:', registration);
+
+      // Configurar o handler de mensagens em primeiro plano
+      firebase.messaging().onMessage((payload) => {
         console.log('Mensagem recebida:', payload);
         showLocalNotification(
           payload.notification.title,
           payload.notification.body
         );
       });
-      
+
     } catch (error) {
-      console.error('Falha no registro do Service Worker:', error);
+      console.error('Falha no Service Worker:', error);
     }
   });
 }
