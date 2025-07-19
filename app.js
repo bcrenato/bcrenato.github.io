@@ -1,120 +1,59 @@
-// ================= Configuração Firebase v9 (Compat) =================
-// Certifique-se que esses scripts estão no seu HTML:
-// <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-// <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
 
-// Configuração do Firebase
+// Supabase
+const supabaseUrl = 'https://YOUR_PROJECT.supabase.co'
+const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+// Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
-  authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
-  databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
-  projectId: "cadastro-membros-c5cd4",
-  storageBucket: "cadastro-membros-c5cd4.firebasestorage.app",
-  messagingSenderId: "250346042791",
-  appId: "1:250346042791:web:6bc469b844de69e526b282"
+  apiKey: "YOUR_FIREBASE_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
-// Inicialização do Firebase (modo compat)
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
 
-// Obtenha a instância do Messaging CORRETAMENTE
-const messaging = firebase.messaging();
-
-
-// ================= Configuração Supabase =================
-const supabaseUrl = 'SUA_URL_SUPABASE';
-const supabaseKey = 'SUA_KEY_SUPABASE';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-// ================= Registro do Service Worker =================
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      const registration = await navigator.serviceWorker.register('/sw.js');
-      console.log('Service Worker registrado:', registration);
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(registration => {
+      console.log('Service Worker registrado', registration);
 
-      // Configurar o handler de mensagens em primeiro plano
-      firebase.messaging().onMessage((payload) => {
-        console.log('Mensagem recebida:', payload);
-        showLocalNotification(
-          payload.notification.title,
-          payload.notification.body
-        );
+      document.getElementById('btnNotify').addEventListener('click', async () => {
+        try {
+          const token = await getToken(messaging, {
+            vapidKey: 'YOUR_WEB_PUSH_CERTIFICATE_KEY_PAIR',
+            serviceWorkerRegistration: registration
+          });
+
+          if (token) {
+            console.log('Token:', token);
+
+            const { data, error } = await supabase
+              .from('tokens')
+              .insert([{ token }]);
+
+            if (error) {
+              console.error('Erro ao salvar no Supabase', error);
+            } else {
+              alert('Token salvo no Supabase!');
+            }
+          } else {
+            console.log('Sem token recebido');
+          }
+        } catch (err) {
+          console.error('Erro ao pegar token', err);
+        }
       });
-
-    } catch (error) {
-      console.error('Falha no Service Worker:', error);
-    }
-  });
-}
-
-// ================= Funções de Notificação =================
-function showLocalNotification(title, body) {
-  if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification(title, {
-      body,
-      icon: '/icons/icon-192x192.png'
     });
-  }
 }
 
-async function requestNotificationPermission() {
-  try {
-    const permission = await Notification.requestPermission();
-    
-    if (permission === 'granted') {
-      console.log('Permissão concedida');
-      await registerPushNotifications();
-    } else {
-      console.log('Permissão negada');
-    }
-  } catch (error) {
-    console.error('Erro ao solicitar permissão:', error);
-  }
-}
-
-async function registerPushNotifications() {
-  try {
-    const registration = await navigator.serviceWorker.ready;
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array('BK1Vsw-Pp7cMx2ejEA8iA5_g2JIVp157aiA60UNT7d40Zj9OgSBsNuEios8SwmKDpCR8GgmLjUBxAuF8brKZRWI')
-    });
-
-    // Função auxiliar para converter VAPID key
-    function urlBase64ToUint8Array(base64String) {
-      const padding = '='.repeat((4 - base64String.length % 4) % 4);
-      const base64 = (base64String + padding)
-        .replace(/-/g, '+')
-        .replace(/_/g, '/');
-      const rawData = window.atob(base64);
-      return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
-    }
-
-    // Envia a subscription para o Supabase
-    const { error } = await supabase
-      .from('user_devices')
-      .insert([{
-        user_id: (await supabase.auth.getUser()).data.user?.id,
-        device_token: JSON.stringify(subscription)
-      }]);
-
-    if (error) throw error;
-    console.log('Dispositivo registrado para notificações push');
-
-  } catch (error) {
-    console.error('Erro no registro de notificações:', error);
-  }
-}
-
-// ================= Event Listeners =================
-document.addEventListener('DOMContentLoaded', () => {
-  const btnEnable = document.getElementById('enableNotifications');
-  if (btnEnable) {
-    btnEnable.addEventListener('click', requestNotificationPermission);
-  }
-  
-  if ('Notification' in window && Notification.permission === 'granted') {
-    registerPushNotifications();
-  }
+onMessage(messaging, (payload) => {
+  console.log('Mensagem recebida em foreground: ', payload);
 });
