@@ -1,4 +1,4 @@
-// Configuração do Firebase
+ // Configuração do Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
   authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
