@@ -1,24 +1,25 @@
-<!-- index.html --> 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu PWA</title>
-  <link rel="manifest" href="manifest.json">
-  <!-- Firebase App (opcional) -->
+  <title>Notificações com Supabase</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
-
-  <!-- Outros serviços Firebase que você precise -->
 </head>
 <body>
-  <h1>Meu PWA</h1>
-  
-  <button id="enableNotifications">Ativar Notificações</button>
+  <div id="auth-container">
+    <h2>Cadastro/Login</h2>
+    <input type="email" id="email" placeholder="E-mail">
+    <input type="password" id="password" placeholder="Senha">
+    <button id="signup">Cadastrar</button>
+    <button id="login">Entrar</button>
+  </div>
 
-  <!-- Supabase JS -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <div id="app" style="display:none;">
+    <h1>Bem-vindo!</h1>
+    <button id="enableNotifications">Ativar Notificações</button>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
