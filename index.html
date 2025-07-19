@@ -27,22 +27,25 @@
 
       
 
-        messaging.requestPermission()
-        .then(() => {
-          statusEl.textContent = 'Permissão concedida para notificações.';
-          return messaging.getToken();
-        })
-        .then(token => {
-          statusEl.textContent = 'Token FCM gerado: ' + token;
-          console.log('Token FCM:', token);
-          // Salve o token no Firebase Realtime Database
-          const dbRef = firebase.database().ref('tokens');
-          dbRef.push(token);
-        })
-        .catch(err => {
-          statusEl.textContent = 'Erro na permissão: ' + err;
-          console.error(err);
-        });
+       Notification.requestPermission().then(permission => {
+  if (permission === 'granted') {
+    statusEl.textContent = 'Permissão concedida para notificações.';
+    return messaging.getToken();
+  } else {
+    throw new Error('Permissão para notificações não concedida.');
+  }
+})
+.then(token => {
+  statusEl.textContent = 'Token FCM gerado: ' + token;
+  console.log('Token FCM:', token);
+  const dbRef = firebase.database().ref('tokens');
+  dbRef.push(token);
+})
+.catch(err => {
+  statusEl.textContent = 'Erro: ' + err;
+  console.error(err);
+});
+
 
         messaging.onMessage(payload => {
           console.log('Mensagem recebida: ', payload);
