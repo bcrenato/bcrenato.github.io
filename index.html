@@ -3,25 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PWA de Teste</title>
+  <title>PWA com Notificações Firebase</title>
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#317EFB" />
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; }
-    h1 { color: #317EFB; }
+    body { font-family: Arial, sans-serif; margin: 2rem; }
   </style>
 </head>
 <body>
-  <h1>Olá, PWA Teste!</h1>
-  <p>Esse é um PWA básico para testes.</p>
+  <h1>PWA Firebase Push Teste</h1>
+  <p id="status">Inicializando...</p>
 
+  <script src="firebase-config.js"></script>
   <script>
+    const statusEl = document.getElementById('status');
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('Service Worker registrado com sucesso!'))
-        .catch(err => console.error('Falha ao registrar Service Worker:', err));
+      .then(registration => {
+        statusEl.textContent = 'Service Worker registrado!';
+        const messaging = firebase.messaging();
+
+        messaging.useServiceWorker(registration);
+
+        messaging.requestPermission()
+        .then(() => {
+          statusEl.textContent = 'Permissão concedida para notificações.';
+          return messaging.getToken();
+        })
+        .then(token => {
+          statusEl.textContent = 'Token FCM gerado: ' + token;
+          console.log('Token FCM:', token);
+          // Salve o token no Firebase Realtime Database
+          const dbRef = firebase.database().ref('tokens');
+          dbRef.push(token);
+        })
+        .catch(err => {
+          statusEl.textContent = 'Erro na permissão: ' + err;
+          console.error(err);
+        });
+
+        messaging.onMessage(payload => {
+          console.log('Mensagem recebida: ', payload);
+          alert('Notificação recebida: ' + payload.notification.title);
+        });
+      })
+      .catch(err => {
+        statusEl.textContent = 'Falha ao registrar Service Worker: ' + err;
+        console.error(err);
+      });
     } else {
-      console.log('Service Worker não suportado nesse navegador.');
+      statusEl.textContent = 'Service Worker não suportado.';
     }
   </script>
 </body>
