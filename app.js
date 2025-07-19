@@ -1,21 +1,22 @@
-// ================= Configuração Firebase v9 (Modular) =================
-// Importação via CDN (compat) - já que você está usando firebase 9.23 via script
-const { initializeApp } = firebase.console.firebaseApp;
-const { getMessaging, onMessage } = firebase.messaging;
+// ================= Configuração Firebase v9 (Compat) =================
+// Certifique-se que esses scripts estão no seu HTML:
+// <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+// <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js"></script>
 
 // Configuração do Firebase
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO",
-  storageBucket: "SEU_PROJETO.appspot.com",
-  messagingSenderId: "SEU_SENDER_ID",
-  appId: "SEU_APP_ID"
+  apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
+  authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
+  databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
+  projectId: "cadastro-membros-c5cd4",
+  storageBucket: "cadastro-membros-c5cd4.firebasestorage.app",
+  messagingSenderId: "250346042791",
+  appId: "1:250346042791:web:6bc469b844de69e526b282"
 };
 
 // Inicializa o Firebase
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
+const app = firebase.initializeApp(firebaseConfig); // Correção aqui
+const messaging = firebase.messaging.getMessaging(app);
 
 // ================= Configuração Supabase =================
 const supabaseUrl = 'SUA_URL_SUPABASE';
@@ -29,8 +30,8 @@ if ('serviceWorker' in navigator) {
       const registration = await navigator.serviceWorker.register('/sw.js');
       console.log('Service Worker registrado com sucesso:', registration);
       
-      // Configura mensagens em foreground (quando o app está aberto)
-      onMessage(messaging, (payload) => {
+      // Configura mensagens em foreground
+      firebase.messaging.onMessage(messaging, (payload) => {
         console.log('Mensagem recebida:', payload);
         showLocalNotification(
           payload.notification.title,
@@ -45,17 +46,15 @@ if ('serviceWorker' in navigator) {
 }
 
 // ================= Funções de Notificação =================
-// Mostra notificação local
 function showLocalNotification(title, body) {
   if ('Notification' in window && Notification.permission === 'granted') {
     new Notification(title, {
       body,
-      icon: '/icons/icon-192x192.png' // Caminho corrigido para sua pasta
+      icon: '/icons/icon-192x192.png'
     });
   }
 }
 
-// Solicita permissão para notificações
 async function requestNotificationPermission() {
   try {
     const permission = await Notification.requestPermission();
@@ -71,14 +70,23 @@ async function requestNotificationPermission() {
   }
 }
 
-// Registra o dispositivo para push notifications
 async function registerPushNotifications() {
   try {
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: 'SUA_CHAVE_PUBLICA_VAPID'
+      applicationServerKey: urlBase64ToUint8Array('BK1Vsw-Pp7cMx2ejEA8iA5_g2JIVp157aiA60UNT7d40Zj9OgSBsNuEios8SwmKDpCR8GgmLjUBxAuF8brKZRWI')
     });
+
+    // Função auxiliar para converter VAPID key
+    function urlBase64ToUint8Array(base64String) {
+      const padding = '='.repeat((4 - base64String.length % 4) % 4);
+      const base64 = (base64String + padding)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+      const rawData = window.atob(base64);
+      return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
+    }
 
     // Envia a subscription para o Supabase
     const { error } = await supabase
@@ -98,13 +106,11 @@ async function registerPushNotifications() {
 
 // ================= Event Listeners =================
 document.addEventListener('DOMContentLoaded', () => {
-  // Botão para ativar notificações
   const btnEnable = document.getElementById('enableNotifications');
   if (btnEnable) {
     btnEnable.addEventListener('click', requestNotificationPermission);
   }
   
-  // Verifica se já tem permissão
   if ('Notification' in window && Notification.permission === 'granted') {
     registerPushNotifications();
   }
