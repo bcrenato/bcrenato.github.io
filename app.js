@@ -3,18 +3,19 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebas
 import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
 
 // Supabase
-const supabaseUrl = 'https://YOUR_PROJECT.supabase.co'
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'
+const supabaseUrl = 'https://vodnjhnmimpoanevsvaw.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvZG5qaG5taW1wb2FuZXZzdmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5NTc5MzEsImV4cCI6MjA2ODUzMzkzMX0.OukdQS12RI2-UTKGxtqC-voiU7PybFfIutyeia3-8qE'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Firebase
 const firebaseConfig = {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
+  authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
+  databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
+  projectId: "cadastro-membros-c5cd4",
+  storageBucket: "cadastro-membros-c5cd4.firebasestorage.app",
+  messagingSenderId: "250346042791",
+  appId: "1:250346042791:web:6bc469b844de69e526b282"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -28,7 +29,7 @@ if ('serviceWorker' in navigator) {
       document.getElementById('btnNotify').addEventListener('click', async () => {
         try {
           const token = await getToken(messaging, {
-            vapidKey: 'YOUR_WEB_PUSH_CERTIFICATE_KEY_PAIR',
+            vapidKey: 'BK1Vsw-Pp7cMx2ejEA8iA5_g2JIVp157aiA60UNT7d40Zj9OgSBsNuEios8SwmKDpCR8GgmLjUBxAuF8brKZRWI',
             serviceWorkerRegistration: registration
           });
 
