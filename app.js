@@ -18,7 +18,7 @@ document.getElementById('enableNotifications').addEventListener('click', async (
   try {
     const permission = await Notification.requestPermission();
     if (permission === 'granted') {
-      const token = await messaging.getToken({ vapidKey: 'SUA_VAPID_KEY' });
+      const token = await messaging.getToken({ vapidKey: 'BK1Vsw-Pp7cMx2ejEA8iA5_g2JIVp157aiA60UNT7d40Zj9OgSBsNuEios8SwmKDpCR8GgmLjUBxAuF8brKZRWI' });
       console.log('Token FCM:', token);
       
       // Envia o token para o Supabase (armazenar no futuro)
