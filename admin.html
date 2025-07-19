@@ -37,7 +37,7 @@
       };
 
       try {
-        const response = await fetch('https://SEU_BACKEND_URL/send', {
+        const response = await fetch('https://firebase-notifications-server.onrender.com/send', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
