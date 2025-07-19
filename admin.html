@@ -2,61 +2,39 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin - Enviar Notificação</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 400px; margin: auto; }
-    label, input, textarea, button { display: block; width: 100%; margin-bottom: 1rem; }
-  </style>
+  <title>Admin Notificações</title>
 </head>
 <body>
   <h1>Enviar Notificação</h1>
   <form id="formNotificacao">
-    <label>Título:
-      <input type="text" id="title" required />
-    </label>
-    <label>Mensagem:
-      <textarea id="body" rows="4" required></textarea>
-    </label>
-    <label>URL da imagem (opcional):
-      <input type="url" id="image" />
-    </label>
+    <label>Título: <input type="text" id="titulo" required /></label><br />
+    <label>Mensagem: <textarea id="mensagem" required></textarea></label><br />
+    <label>URL da Imagem: <input type="url" id="imagem" /></label><br />
     <button type="submit">Enviar</button>
   </form>
-  <div id="resultado"></div>
 
- <script>
-  const form = document.getElementById('formNotificacao');
-  const resultado = document.getElementById('resultado');
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    console.log('Botão enviar clicado!'); // Teste para ver se o evento é disparado
-
-    const data = {
-      title: document.getElementById('title').value,
-      body: document.getElementById('body').value,
-      image: document.getElementById('image').value || null
-    };
-
-    try {
-     const response = await fetch('https://firebase-backend-v2bm.onrender.com/send', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(data)
-});
-
-
-      if (response.ok) {
-        const json = await response.json();
-        resultado.textContent = `Notificações enviadas com sucesso! Sucesso: ${json.success}, Falhas: ${json.failure}`;
-      } else {
-        resultado.textContent = `Erro: ${response.statusText}`;
+  <script>
+    const form = document.getElementById('formNotificacao');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        title: document.getElementById('titulo').value,
+        body: document.getElementById('mensagem').value,
+        image: document.getElementById('imagem').value || null,
+      };
+      try {
+        const res = await fetch('https://SEU_BACKEND_URL/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (res.ok) alert('Notificação enviada com sucesso!');
+        else alert('Erro ao enviar notificação');
+      } catch (error) {
+        alert('Erro na requisição');
+        console.error(error);
       }
-    } catch (error) {
-      resultado.textContent = `Erro na requisição: ${error.message}`;
-    }
-  });
-</script>
-
+    });
+  </script>
 </body>
 </html>
