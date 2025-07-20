@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Igreja MINE</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#3367D6" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Igreja MINE</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3367D6">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
-<body>
-  <header class="topo">
-    <h1>Igreja MINE</h1>
-  </header>
+<body class="bg-light text-center">
 
-  <main class="content">
-    <p>Bem-vindo ao nosso PWA!</p>
-    <button id="ativarNotificacoes">Ativar Notificações</button>
-    <div id="statusNotificacao"></div>
-  </main>
+<header class="bg-primary text-white py-3">
+  <h1>Igreja MINE</h1>
+</header>
 
-  <script type="module" src="./notificacoes.js"></script>
+<main class="container my-5">
+  <p class="lead">Bem-vindo ao nosso PWA!</p>
+  <button id="ativarNotificacoes" class="btn btn-success">Ativar Notificações</button>
+  <div id="statusNotificacao" class="mt-3"></div>
+</main>
+
+<script type="module" src="./notificacoes.js"></script>
 </body>
 </html>
