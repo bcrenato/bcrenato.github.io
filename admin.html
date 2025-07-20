@@ -42,7 +42,7 @@ document.getElementById('formNotificacao').addEventListener('submit', e => {
     url: form.url.value
   };
 
-  fetch('enviar.php', {
+  fetch('https://igrejamine.x10.mx/enviar.php', {
     method: 'POST',
     body: JSON.stringify(data)
   }).then(res => res.json()).then(json => {
