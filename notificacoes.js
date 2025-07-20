@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// 🔷 Substitua pelos SEUS dados do Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
   authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
@@ -14,32 +14,53 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
+const db = getDatabase(app);
 
-navigator.serviceWorker.ready.then(registration => {
-  getToken(messaging, {
-    vapidKey: "BK1Vsw-Pp7cMx2ejEA8iA5_g2JIVp157aiA60UNT7d40Zj9OgSBsNuEios8SwmKDpCR8GgmLjUBxAuF8brKZRWI",
-    serviceWorkerRegistration: registration
-  })
-  .then((token) => {
-    if (token) {
-      console.log("✅ Token FCM:", token);
-      // Aqui você pode salvar o token no Firebase Realtime Database
-      fetch("https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com/tokens.json", {
-        method: "POST",
-        body: JSON.stringify({ token }),
-        headers: { "Content-Type": "application/json" }
-      });
-    } else {
-      console.warn("⚠️ Permissão para notificações não concedida");
+const btn = document.getElementById("ativarNotificacoes");
+const statusDiv = document.getElementById("statusNotificacao");
+
+btn.addEventListener("click", () => {
+  Notification.requestPermission().then(permission => {
+    if (permission !== 'granted') {
+      statusDiv.innerText = "❌ Permissão negada para notificações.";
+      return;
     }
-  })
-  .catch((err) => {
-    console.error("❌ Erro ao obter token:", err);
+
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then((registration) => {
+        console.log('Service Worker registrado:', registration);
+
+        return getToken(messaging, {
+          vapidKey: "BK1Vsw-Pp7cMx2ejEA8iA5_g2JIVp157aiA60UNT7d40Zj9OgSBsNuEios8SwmKDpCR8GgmLjUBxAuF8brKZRWI",
+          serviceWorkerRegistration: registration
+        });
+      })
+      .then((token) => {
+        if (token) {
+          console.log('Token FCM:', token);
+          statusDiv.innerText = "✅ Notificações ativadas!";
+
+          // Salvar no Realtime Database
+          set(ref(db, 'tokens/' + token), {
+            token: token
+          }).then(() => {
+            console.log("Token salvo no Firebase!");
+          }).catch(err => {
+            console.error("Erro ao salvar token:", err);
+          });
+        } else {
+          console.log('Não foi possível obter token.');
+          statusDiv.innerText = "⚠️ Não foi possível obter token.";
+        }
+      })
+      .catch((err) => {
+        console.error('Erro ao pegar token:', err);
+        statusDiv.innerText = "❌ Erro ao ativar notificações.";
+      });
   });
 });
 
-// Recebe mensagens quando a página está em primeiro plano
+// Para mensagens enquanto a página está aberta
 onMessage(messaging, (payload) => {
-  console.log("📨 Mensagem recebida:", payload);
-  alert(`${payload.notification.title}\n${payload.notification.body}`);
+  console.log('Mensagem recebida com a página aberta:', payload);
 });
