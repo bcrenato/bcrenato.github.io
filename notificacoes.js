@@ -3,12 +3,13 @@ import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/fireb
 
 // 🔷 Substitua pelos SEUS dados do Firebase
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJECT_ID.firebaseapp.com",
-  projectId: "SEU_PROJECT_ID",
-  storageBucket: "SEU_PROJECT_ID.appspot.com",
-  messagingSenderId: "SEU_SENDER_ID",
-  appId: "SEU_APP_ID"
+  apiKey: "AIzaSyBC73aRe7HLp-zQNpJcbWLlUj24kiQGAcE",
+  authDomain: "cadastro-membros-c5cd4.firebaseapp.com",
+  databaseURL: "https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com",
+  projectId: "cadastro-membros-c5cd4",
+  storageBucket: "cadastro-membros-c5cd4.firebasestorage.app",
+  messagingSenderId: "250346042791",
+  appId: "1:250346042791:web:6bc469b844de69e526b282"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -16,14 +17,14 @@ const messaging = getMessaging(app);
 
 navigator.serviceWorker.ready.then(registration => {
   getToken(messaging, {
-    vapidKey: "SUA_VAPID_KEY",
+    vapidKey: "BK1Vsw-Pp7cMx2ejEA8iA5_g2JIVp157aiA60UNT7d40Zj9OgSBsNuEios8SwmKDpCR8GgmLjUBxAuF8brKZRWI",
     serviceWorkerRegistration: registration
   })
   .then((token) => {
     if (token) {
       console.log("✅ Token FCM:", token);
       // Aqui você pode salvar o token no Firebase Realtime Database
-      fetch("https://SEU_DATABASE.firebaseio.com/tokens.json", {
+      fetch("https://cadastro-membros-c5cd4-default-rtdb.firebaseio.com/tokens.json", {
         method: "POST",
         body: JSON.stringify({ token }),
         headers: { "Content-Type": "application/json" }
