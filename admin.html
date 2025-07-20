@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Notificações</title>
+<style>
+body { font-family: Arial; background: #eee; padding: 20px; }
+.container { background: #fff; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+h2 { text-align: center; color: #3367D6; }
+input, textarea, button { width: 100%; margin: 10px 0; padding: 10px; }
+button { background: #3367D6; color: #fff; border: none; cursor: pointer; }
+.msg { text-align: center; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>🔐 Admin</h2>
+  <input type="password" id="senha" placeholder="Senha de admin">
+  <div id="painel" style="display:none;">
+    <input type="text" id="titulo" placeholder="Título">
+    <textarea id="mensagem" placeholder="Mensagem"></textarea>
+    <button onclick="enviar()">Enviar</button>
+    <div class="msg" id="resultado"></div>
+  </div>
+</div>
+
+<script>
+const senhaCorreta = "minhasenha"; // Troque aqui por uma senha forte
+
+document.getElementById('senha').addEventListener('keyup', function(e) {
+  if (e.key === 'Enter') {
+    if (e.target.value === senhaCorreta) {
+      e.target.style.display = 'none';
+      document.getElementById('painel').style.display = 'block';
+    } else {
+      alert('Senha incorreta!');
+    }
+  }
+});
+
+function enviar() {
+  const titulo = document.getElementById('titulo').value.trim();
+  const mensagem = document.getElementById('mensagem').value.trim();
+
+  fetch('https://SEU_DOMINIO_X10/enviar.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ titulo, mensagem })
+  })
+  .then(r => r.text())
+  .then(t => document.getElementById('resultado').textContent = '✅ Enviado!')
+  .catch(e => document.getElementById('resultado').textContent = '❌ Erro.');
+}
+</script>
+
+</body>
+</html>
