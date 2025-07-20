@@ -1,15 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PWA com Supabase + Firebase</title>
+<title>Igreja MINE</title>
 <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3367D6">
+<link rel="apple-touch-icon" href="icone.png">
+<style>
+body { font-family: Arial, sans-serif; margin:0; background:#f5f5f5; }
+header { background:#3367D6; color:white; padding:10px; text-align:center; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; padding:20px; }
+.item { background:white; text-align:center; padding:10px; border-radius:8px; cursor:pointer; }
+.rodape { text-align:center; padding:10px; }
+</style>
 </head>
 <body>
-<h1>PWA com Supabase + Firebase</h1>
-<button id="btnNotify">Ativar Notificações</button>
 
-<script type="module" src="app.js"></script>
+<header>
+<h1>Igreja MINE</h1>
+</header>
+
+<main class="grid">
+<div class="item">Relógio</div>
+<div class="item">Ministérios</div>
+<div class="item">Dízimos</div>
+</main>
+
+<footer class="rodape">
+<small>&copy; 2025 Igreja MINE</small>
+</footer>
+
+<script src="app.js"></script>
+<script type="module" src="notificacoes.js"></script>
 </body>
 </html>
