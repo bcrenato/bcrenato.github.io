@@ -13,13 +13,23 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function(payload) {
-  console.log('[firebase-messaging-sw.js] Mensagem recebida em segundo plano:', payload);
+  console.log('[firebase-messaging-sw.js] Mensagem recebida em segundo plano: ', payload);
 
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: '/icone.png' // opcional
+    icon: payload.notification.icon,
+    image: payload.notification.image,
+    data: payload.data // para link personalizado
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  const link = event.notification.data?.link || event.notification.click_action;
+  if (link) {
+    event.waitUntil(clients.openWindow(link));
+  }
 });
