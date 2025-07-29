@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avaliar Obreiros/Diáconos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase.js"></script>
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Avaliar Obreiros/Diáconos</h2>
+    <form id="formObreiro" class="card p-4 shadow">
+      <input type="text" id="obreiro" class="form-control mb-3" placeholder="Nome do Obreiro/Diácono" required>
+      <input type="number" id="nota" class="form-control mb-3" placeholder="Nota (1 a 5)" min="1" max="5" required>
+      <textarea id="comentario" class="form-control mb-3" placeholder="Comentário (opcional)"></textarea>
+      <button class="btn btn-success w-100">Enviar Avaliação</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("formObreiro").addEventListener("submit", e => {
+      e.preventDefault();
+      const obreiro = document.getElementById("obreiro").value;
+      const nota = document.getElementById("nota").value;
+      const comentario = document.getElementById("comentario").value;
+
+      db.ref("avaliacoes/obreiros").push({
+        obreiro,
+        nota,
+        comentario,
+        data: new Date().toISOString()
+      }).then(() => {
+        alert("Avaliação enviada com sucesso!");
+        e.target.reset();
+      }).catch(err => alert("Erro: " + err.message));
+    });
+  </script>
+</body>
+</html>
