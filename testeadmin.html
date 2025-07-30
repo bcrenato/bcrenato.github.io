@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel Administrativo - Igreja</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#f4f4f4; }
+    header { background:#ed3237; color:#fff; padding:15px; text-align:center; }
+    main { max-width:900px; margin:30px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    h2 { color:#ed3237; border-bottom:2px solid #ddd; padding-bottom:8px; }
+    section { margin-bottom:30px; }
+    label { display:block; margin-top:10px; font-weight:bold; }
+    input, textarea { width:100%; padding:10px; margin-top:5px; border:1px solid #ccc; border-radius:4px; }
+    button { margin-top:10px; background:#ed3237; color:#fff; border:none; padding:10px 15px; border-radius:4px; cursor:pointer; }
+    button:hover { background:#c52026; }
+    ul { list-style:none; padding:0; }
+    li { background:#f9f9f9; padding:10px; border:1px solid #ddd; border-radius:4px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center; }
+    .delete { color:#c52026; cursor:pointer; }
+    .delete:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Painel Administrativo - Igreja</h1>
+  </header>
+  <main>
+    <!-- Artigos -->
+    <section id="admin-artigos">
+      <h2>Gerenciar Artigos</h2>
+      <label>Título do Artigo:</label>
+      <input type="text" id="tituloArtigo">
+      <label>Conteúdo:</label>
+      <textarea id="conteudoArtigo"></textarea>
+      <button onclick="adicionarArtigo()">Adicionar Artigo</button>
+      <ul id="listaArtigos"></ul>
+    </section>
+
+    <!-- Agenda -->
+    <section id="admin-agenda">
+      <h2>Gerenciar Agenda Semanal</h2>
+      <label>Dia e Evento:</label>
+      <input type="text" id="eventoAgenda" placeholder="Ex: Terça-feira: Culto de Oração - 20h">
+      <button onclick="adicionarAgenda()">Adicionar Evento</button>
+      <ul id="listaAgenda"></ul>
+    </section>
+
+    <!-- Pedidos de Oração -->
+    <section id="admin-oracao">
+      <h2>Pedidos de Oração</h2>
+      <ul id="listaOracoes"></ul>
+    </section>
+  </main>
+
+  <script>
+    // ----- Artigos -----
+    const listaArtigos = document.getElementById('listaArtigos');
+    function carregarArtigos() {
+      const artigos = JSON.parse(localStorage.getItem('artigos')) || [];
+      listaArtigos.innerHTML = '';
+      artigos.forEach((artigo, i) => {
+        listaArtigos.innerHTML += `<li>
+          <strong>${artigo.titulo}</strong>: ${artigo.conteudo}
+          <span class="delete" onclick="removerArtigo(${i})">Excluir</span>
+        </li>`;
+      });
+    }
+    function adicionarArtigo() {
+      const titulo = document.getElementById('tituloArtigo').value.trim();
+      const conteudo = document.getElementById('conteudoArtigo').value.trim();
+      if (titulo && conteudo) {
+        const artigos = JSON.parse(localStorage.getItem('artigos')) || [];
+        artigos.push({ titulo, conteudo });
+        localStorage.setItem('artigos', JSON.stringify(artigos));
+        carregarArtigos();
+        document.getElementById('tituloArtigo').value = '';
+        document.getElementById('conteudoArtigo').value = '';
+      }
+    }
+    function removerArtigo(i) {
+      const artigos = JSON.parse(localStorage.getItem('artigos')) || [];
+      artigos.splice(i, 1);
+      localStorage.setItem('artigos', JSON.stringify(artigos));
+      carregarArtigos();
+    }
+
+    // ----- Agenda -----
+    const listaAgenda = document.getElementById('listaAgenda');
+    function carregarAgenda() {
+      const agenda = JSON.parse(localStorage.getItem('agenda')) || [];
+      listaAgenda.innerHTML = '';
+      agenda.forEach((evento, i) => {
+        listaAgenda.innerHTML += `<li>${evento} <span class="delete" onclick="removerAgenda(${i})">Excluir</span></li>`;
+      });
+    }
+    function adicionarAgenda() {
+      const evento = document.getElementById('eventoAgenda').value.trim();
+      if (evento) {
+        const agenda = JSON.parse(localStorage.getItem('agenda')) || [];
+        agenda.push(evento);
+        localStorage.setItem('agenda', JSON.stringify(agenda));
+        carregarAgenda();
+        document.getElementById('eventoAgenda').value = '';
+      }
+    }
+    function removerAgenda(i) {
+      const agenda = JSON.parse(localStorage.getItem('agenda')) || [];
+      agenda.splice(i, 1);
+      localStorage.setItem('agenda', JSON.stringify(agenda));
+      carregarAgenda();
+    }
+
+    // ----- Pedidos de Oração -----
+    const listaOracoes = document.getElementById('listaOracoes');
+    function carregarOracoes() {
+      const oracoes = JSON.parse(localStorage.getItem('oracoes')) || [];
+      listaOracoes.innerHTML = '';
+      if (oracoes.length === 0) {
+        listaOracoes.innerHTML = '<li>Nenhum pedido de oração enviado.</li>';
+      }
+      oracoes.forEach((o, i) => {
+        listaOracoes.innerHTML += `<li><strong>${o.nome}</strong>: ${o.pedido}</li>`;
+      });
+    }
+
+    // Simulação: Adicionar pedido via formulário do site
+    window.addEventListener('message', (e) => {
+      if (e.data.tipo === 'oracao') {
+        const oracoes = JSON.parse(localStorage.getItem('oracoes')) || [];
+        oracoes.push(e.data);
+        localStorage.setItem('oracoes', JSON.stringify(oracoes));
+        carregarOracoes();
+      }
+    });
+
+    // Inicialização
+    carregarArtigos();
+    carregarAgenda();
+    carregarOracoes();
+  </script>
+</body>
+</html>
