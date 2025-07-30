@@ -42,6 +42,11 @@
         .social-icon:hover {
             transform: translateY(-3px);
         }
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        
     </style>
 </head>
 <body class="bg-gray-50">
@@ -331,48 +336,60 @@
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12 font-serif">Eventos em Destaque</h2>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Event 1 -->
-                <div class="event-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
-                    <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2025/04/Card1.jpg" alt="Evento 1" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2">Retiro Espiritual</h3>
-                        <p class="text-gray-600 text-sm">Um fim de semana de renovação e comunhão com Deus.</p>
-                        <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm">Saiba mais →</a>
-                    </div>
-                </div>
-                
-                <!-- Event 2 -->
-                <div class="event-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
-                    <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2025/04/Card02.jpg" alt="Evento 2" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2">Conferência de Louvor</h3>
-                        <p class="text-gray-600 text-sm">Noite especial de adoração e música sacra.</p>
-                        <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm">Saiba mais →</a>
-                    </div>
-                </div>
-                
-                <!-- Event 3 -->
-                <div class="event-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
-                    <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2025/04/Card3.jpg" alt="Evento 3" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2">Escola Bíblica</h3>
-                        <p class="text-gray-600 text-sm">Aulas para crianças e adolescentes sobre a Palavra de Deus.</p>
-                        <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm">Saiba mais →</a>
-                    </div>
-                </div>
-                
-                <!-- Event 4 -->
-                <div class="event-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
-                    <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2025/04/Card4.jpg" alt="Evento 4" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg mb-2">Campanha de Oração</h3>
-                        <p class="text-gray-600 text-sm">7 dias de oração por nossas famílias e nação.</p>
-                        <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm">Saiba mais →</a>
-                    </div>
-                </div>
+
+<div class="relative">
+    <!-- Botão Esquerda -->
+    <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md p-2 rounded-full z-10">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <!-- Container do Carrossel -->
+    <div id="carousel" class="flex overflow-x-auto space-x-6 scrollbar-hide scroll-smooth">
+        <!-- Evento 1 -->
+        <div class="event-card min-w-[250px] bg-white rounded-lg overflow-hidden shadow-md flex-shrink-0">
+            <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2025/04/Card1.jpg" alt="Evento 1" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="font-bold text-lg mb-2">Retiro Espiritual</h3>
+                <p class="text-gray-600 text-sm">Um fim de semana de renovação e comunhão com Deus.</p>
+                <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm">Saiba mais →</a>
             </div>
+        </div>
+        <!-- Evento 2 -->
+        <div class="event-card min-w-[250px] bg-white rounded-lg overflow-hidden shadow-md flex-shrink-0">
+            <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2025/04/Card02.jpg" alt="Evento 2" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="font-bold text-lg mb-2">Conferência de Louvor</h3>
+                <p class="text-gray-600 text-sm">Noite especial de adoração e música sacra.</p>
+                <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm">Saiba mais →</a>
+            </div>
+        </div>
+        <!-- Evento 3 -->
+        <div class="event-card min-w-[250px] bg-white rounded-lg overflow-hidden shadow-md flex-shrink-0">
+            <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2025/04/Card3.jpg" alt="Evento 3" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="font-bold text-lg mb-2">Escola Bíblica</h3>
+                <p class="text-gray-600 text-sm">Aulas para crianças e adolescentes sobre a Palavra de Deus.</p>
+                <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm">Saiba mais →</a>
+            </div>
+        </div>
+        <!-- Evento 4 -->
+        <div class="event-card min-w-[250px] bg-white rounded-lg overflow-hidden shadow-md flex-shrink-0">
+            <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2025/04/Card4.jpg" alt="Evento 4" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="font-bold text-lg mb-2">Campanha de Oração</h3>
+                <p class="text-gray-600 text-sm">7 dias de oração por nossas famílias e nação.</p>
+                <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium text-sm">Saiba mais →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão Direita -->
+    <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md p-2 rounded-full z-10">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+            
+             
         </div>
     </section>
 
@@ -496,5 +513,18 @@
             });
         });
     </script>
+
+<script>
+    const carousel = document.getElementById('carousel');
+    document.getElementById('prev').addEventListener('click', () => {
+        carousel.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+    document.getElementById('next').addEventListener('click', () => {
+        carousel.scrollBy({ left: 300, behavior: 'smooth' });
+    });
+</script>
+
+
+    
 </body>
 </html>
