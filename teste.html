@@ -9,14 +9,16 @@
     body { margin:0; font-family: Arial, sans-serif; background:#fff; }
     header { background:#fff; display:flex; justify-content:space-between; align-items:center; padding:10px 20px; box-shadow:0 2px 5px rgba(0,0,0,0.1); position:fixed; width:100%; top:0; z-index:999;}
     header img { height:60px; }
-    
-    nav ul { list-style:none; margin:0; padding:0; display:flex; gap:20px; }
+
+    nav { position:relative; }
+    nav ul { list-style:none; margin:0; padding:0; display:flex; gap:20px; transition:all 0.3s ease-in-out; }
     nav ul li { position:relative; }
     nav a { text-decoration:none; color:#ed3237; font-weight:bold; }
-    
+
+    /* Botão Menu Mobile */
     .menu-toggle { display:none; font-size:28px; cursor:pointer; color:#ed3237; }
 
-    /* Responsivo menu mobile */
+    /* Responsividade do menu */
     @media (max-width: 768px) {
       nav ul { 
         display:none; 
@@ -29,7 +31,7 @@
         box-shadow:0 2px 10px rgba(0,0,0,0.2);
       }
       nav ul.show { display:flex; }
-      nav ul li { padding:10px; border-bottom:1px solid #eee; }
+      nav ul li { padding:12px; border-bottom:1px solid #eee; text-align:left; }
       .menu-toggle { display:block; }
     }
 
@@ -53,7 +55,7 @@
   <a href="#"><img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2018/11/logo-igreja.jpg"></a>
   <nav>
     <div class="menu-toggle"><i class="fas fa-bars"></i></div>
-    <ul>
+    <ul id="menu">
       <li><a href="#">Início</a></li>
       <li><a href="#artigos">Artigos</a></li>
       <li><a href="#oracao">Oração</a></li>
@@ -118,8 +120,15 @@
 
 <script>
   // Menu responsivo
-  document.querySelector('.menu-toggle').addEventListener('click',()=> {
-    document.querySelector('nav ul').classList.toggle('show');
+  const menuToggle = document.querySelector('.menu-toggle');
+  const menu = document.getElementById('menu');
+  menuToggle.addEventListener('click', () => {
+    menu.classList.toggle('show');
+  });
+
+  // Fechar menu ao clicar em um link (em mobile)
+  document.querySelectorAll('nav ul li a').forEach(link=>{
+    link.addEventListener('click', ()=> menu.classList.remove('show'));
   });
 
   // Carregar Artigos e Agenda do localStorage
