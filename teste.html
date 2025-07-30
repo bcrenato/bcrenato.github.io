@@ -6,19 +6,34 @@
   <title>Igreja - Página Principal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    /* --- estilos principais iguais aos anteriores --- */
     body { margin:0; font-family: Arial, sans-serif; background:#fff; }
     header { background:#fff; display:flex; justify-content:space-between; align-items:center; padding:10px 20px; box-shadow:0 2px 5px rgba(0,0,0,0.1); position:fixed; width:100%; top:0; z-index:999;}
     header img { height:60px; }
+    
     nav ul { list-style:none; margin:0; padding:0; display:flex; gap:20px; }
     nav ul li { position:relative; }
     nav a { text-decoration:none; color:#ed3237; font-weight:bold; }
-    nav li ul { display:none; position:absolute; top:100%; left:0; background:#ed3237; padding:10px 0; min-width:150px; }
-    nav li:hover ul { display:block; }
-    nav li ul li a { color:#fff; padding:8px 15px; display:block; }
-    .menu-toggle { display:none; font-size:26px; cursor:pointer; color:#ed3237; }
+    
+    .menu-toggle { display:none; font-size:28px; cursor:pointer; color:#ed3237; }
 
-    .hero { margin-top:80px; background:#3f444a; color:#fff; text-align:center; padding:80px 20px; }
+    /* Responsivo menu mobile */
+    @media (max-width: 768px) {
+      nav ul { 
+        display:none; 
+        flex-direction:column; 
+        background:#fff; 
+        position:absolute; 
+        top:70px; 
+        right:0; 
+        width:220px; 
+        box-shadow:0 2px 10px rgba(0,0,0,0.2);
+      }
+      nav ul.show { display:flex; }
+      nav ul li { padding:10px; border-bottom:1px solid #eee; }
+      .menu-toggle { display:block; }
+    }
+
+    .hero { margin-top:80px; background:#3f444a; color:#fff; text-align:center; padding:60px 20px; }
     .section { padding:50px 20px; text-align:center; }
     .section h2 { color:#ed3237; margin-bottom:15px; }
     .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px; margin-top:20px; }
@@ -102,34 +117,27 @@
 </footer>
 
 <script>
-  // Responsivo Menu
+  // Menu responsivo
   document.querySelector('.menu-toggle').addEventListener('click',()=> {
     document.querySelector('nav ul').classList.toggle('show');
   });
 
-  // --- Carregar Artigos ---
+  // Carregar Artigos e Agenda do localStorage
   function carregarArtigos() {
     const artigos = JSON.parse(localStorage.getItem('artigos')) || [];
     const lista = document.getElementById('listaArtigos');
-    lista.innerHTML = '';
-    if (artigos.length === 0) lista.innerHTML = '<p>Nenhum artigo disponível.</p>';
-    artigos.forEach(a => {
-      lista.innerHTML += `<div class="card"><h3>${a.titulo}</h3><p>${a.conteudo}</p></div>`;
-    });
+    lista.innerHTML = artigos.length ? '' : '<p>Nenhum artigo disponível.</p>';
+    artigos.forEach(a => lista.innerHTML += `<div class="card"><h3>${a.titulo}</h3><p>${a.conteudo}</p></div>`);
   }
 
-  // --- Carregar Agenda ---
   function carregarAgenda() {
     const agenda = JSON.parse(localStorage.getItem('agenda')) || [];
     const lista = document.getElementById('listaAgenda');
-    lista.innerHTML = '';
-    if (agenda.length === 0) lista.innerHTML = '<p>Nenhum evento cadastrado.</p>';
-    agenda.forEach(e => {
-      lista.innerHTML += `<div class="agenda-item">${e}</div>`;
-    });
+    lista.innerHTML = agenda.length ? '' : '<p>Nenhum evento cadastrado.</p>';
+    agenda.forEach(e => lista.innerHTML += `<div class="agenda-item">${e}</div>`);
   }
 
-  // --- Pedido de Oração ---
+  // Pedido de Oração
   document.getElementById('formOracao').addEventListener('submit', (e)=>{
     e.preventDefault();
     const nome = document.getElementById('nomeOracao').value.trim();
@@ -139,11 +147,10 @@
       oracoes.push({ nome, pedido });
       localStorage.setItem('oracoes', JSON.stringify(oracoes));
       alert("Pedido de oração enviado com sucesso!");
-      document.getElementById('formOracao').reset();
+      e.target.reset();
     }
   });
 
-  // Inicializa dados
   carregarArtigos();
   carregarAgenda();
 </script>
