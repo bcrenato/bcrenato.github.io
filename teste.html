@@ -36,6 +36,10 @@
     /* Player Rádio */
     .radio-player { background:#f1f1f1; padding:20px; border-radius:8px; display:inline-block; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-top:10px; }
 
+    /* Agenda */
+    .agenda { max-width:700px; margin:auto; text-align:left; }
+    .agenda-item { background:#fff; border:1px solid #ddd; padding:15px; margin-bottom:10px; border-radius:6px; box-shadow:0 2px 5px rgba(0,0,0,0.05); }
+
     /* Redes sociais */
     .social { margin-top:20px; }
     .social a { color:#fff; margin:0 10px; font-size:20px; transition:0.3s; }
@@ -78,20 +82,14 @@
         <li>
           <a href="#">Para Você <i class="fas fa-chevron-down"></i></a>
           <ul>
-            <li><a href="#">Artigos</a></li>
-            <li><a href="#">Oração</a></li>
-            <li><a href="#">Bíblia Online</a></li>
+            <li><a href="#artigos">Artigos</a></li>
+            <li><a href="#oracao">Oração</a></li>
+            <li><a href="#biblia">Bíblia Online</a></li>
           </ul>
         </li>
-        <li><a href="#">Web Rádio</a></li>
-        <li><a href="#">Contato</a></li>
-        <li>
-          <a href="#">Membros <i class="fas fa-chevron-down"></i></a>
-          <ul>
-            <li><a href="#">Ofertar</a></li>
-            <li><a href="#">Login</a></li>
-          </ul>
-        </li>
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#radio">Web Rádio</a></li>
+        <li><a href="#contato">Contato</a></li>
       </ul>
     </nav>
   </header>
@@ -126,9 +124,9 @@
     <h2>Galeria de Fotos</h2>
     <div class="swiper">
       <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="https://via.placeholder.com/800x400?text=Foto+1" alt=""></div>
-        <div class="swiper-slide"><img src="https://via.placeholder.com/800x400?text=Foto+2" alt=""></div>
-        <div class="swiper-slide"><img src="https://via.placeholder.com/800x400?text=Foto+3" alt=""></div>
+        <div class="swiper-slide"><img src="https://via.placeholder.com/800x400?text=Foto+1"></div>
+        <div class="swiper-slide"><img src="https://via.placeholder.com/800x400?text=Foto+2"></div>
+        <div class="swiper-slide"><img src="https://via.placeholder.com/800x400?text=Foto+3"></div>
       </div>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-prev"></div>
@@ -136,25 +134,55 @@
     </div>
   </div>
 
-  <div class="section">
-    <h2>Assista ao Vivo</h2>
-    <p>Transmissões ao vivo dos nossos cultos e eventos.</p>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/live_stream?channel=SEU_CANAL" frameborder="0" allowfullscreen></iframe>
+  <div class="section" id="artigos">
+    <h2>Artigos</h2>
+    <div class="grid">
+      <div class="card"><h3>A importância da oração</h3><p>Entenda como a oração fortalece nossa fé e comunhão com Deus.</p></div>
+      <div class="card"><h3>Estudo sobre João 3:16</h3><p>Uma reflexão sobre o amor incondicional de Deus por nós.</p></div>
+      <div class="card"><h3>Como viver em santidade</h3><p>Dicas práticas baseadas na Bíblia para uma vida santa.</p></div>
+    </div>
   </div>
 
-  <div class="section" style="background:#f9f9f9;">
+  <div class="section" id="oracao" style="background:#f9f9f9;">
+    <h2>Pedido de Oração</h2>
+    <p>Envie seu pedido de oração, estaremos intercedendo por você.</p>
+    <form style="max-width:500px;margin:auto;text-align:left;">
+      <label>Nome:</label>
+      <input type="text" style="width:100%;padding:10px;margin-bottom:10px;">
+      <label>Pedido de Oração:</label>
+      <textarea style="width:100%;padding:10px;height:100px;"></textarea>
+      <button type="submit" style="margin-top:10px;background:#ed3237;color:#fff;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;">Enviar</button>
+    </form>
+  </div>
+
+  <div class="section" id="biblia">
+    <h2>Bíblia Online</h2>
+    <p>Leia a Bíblia diretamente em nosso site.</p>
+    <iframe src="https://www.bibliaonline.com.br/acf/gn/1" width="90%" height="400" style="border:1px solid #ccc;border-radius:8px;"></iframe>
+  </div>
+
+  <div class="section" id="agenda" style="background:#f9f9f9;">
+    <h2>Agenda Semanal</h2>
+    <div class="agenda">
+      <div class="agenda-item"><strong>Domingo:</strong> Culto de Celebração - 19h</div>
+      <div class="agenda-item"><strong>Terça-feira:</strong> Culto de Oração - 20h</div>
+      <div class="agenda-item"><strong>Quinta-feira:</strong> Estudo Bíblico - 20h</div>
+      <div class="agenda-item"><strong>Sábado:</strong> Ensaio do Ministério de Louvor - 18h</div>
+    </div>
+  </div>
+
+  <div class="section" id="radio">
     <h2>Web Rádio</h2>
     <p>Ouça nossa programação ao vivo.</p>
     <div class="radio-player">
       <audio controls autoplay>
-        <!-- Substitua pela URL do seu streaming de rádio -->
         <source src="https://stream.zeno.fm/your-radio-url" type="audio/mpeg">
         Seu navegador não suporta o player de áudio.
       </audio>
     </div>
   </div>
 
-  <footer>
+  <footer id="contato">
     <div class="social">
       <a href="#"><i class="fab fa-facebook-f"></i></a>
       <a href="#"><i class="fab fa-instagram"></i></a>
@@ -166,10 +194,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('nav ul');
-    menuToggle.addEventListener('click', () => navMenu.classList.toggle('show'));
-
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('nav ul').classList.toggle('show');
+    });
     new Swiper('.swiper', {
       loop:true,
       pagination:{ el:'.swiper-pagination', clickable:true },
