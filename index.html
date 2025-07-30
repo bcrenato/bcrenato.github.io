@@ -5,33 +5,174 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Igreja Cristã Nova Esperança</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase.js"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    header {
+      background: url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      height: 80vh; color: white; display: flex; align-items: center; justify-content: center;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+    .overlay { background: rgba(0,0,0,0.6); position: absolute; top:0; left:0; width:100%; height:80vh; }
+    header .content { position: relative; z-index: 2; text-align: center; }
+    section { padding: 60px 0; }
+    footer { background: #222; color: #ccc; padding: 30px 0; }
+    .social-icons a { color: white; margin: 0 10px; font-size: 20px; }
+    .form-section { background: #f8f9fa; border-radius: 10px; padding: 20px; }
+  </style>
 </head>
 <body>
-  <header class="bg-dark text-white text-center py-4">
-    <h1>Igreja Cristã Nova Esperança</h1>
-    <p>"Onde Cristo é nossa Esperança Viva"</p>
-  </header>
 
-  <main class="container text-center my-5">
-    <h2>Bem-vindo!</h2>
-    <p class="lead">Participe conosco e sinta a presença de Deus.</p>
-    <div class="row mt-4">
-      <div class="col-md-4">
-        <a href="avaliacao-pregacao.html" class="btn btn-primary w-100 btn-lg">Avaliar Pregação</a>
-      </div>
-      <div class="col-md-4">
-        <a href="avaliacao-obreiro.html" class="btn btn-success w-100 btn-lg">Avaliar Obreiros</a>
-      </div>
-      <div class="col-md-4">
-        <a href="pedido-oracao.html" class="btn btn-warning w-100 btn-lg">Pedido de Oração</a>
-      </div>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">IC Nova Esperança</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="menu" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a href="#sobre" class="nav-link">Sobre</a></li>
+        <li class="nav-item"><a href="#cultos" class="nav-link">Cultos</a></li>
+        <li class="nav-item"><a href="#departamentos" class="nav-link">Departamentos</a></li>
+        <li class="nav-item"><a href="#oracao" class="nav-link">Pedidos de Oração</a></li>
+        <li class="nav-item"><a href="#avaliacao" class="nav-link">Avaliações</a></li>
+        <li class="nav-item"><a href="#contato" class="nav-link">Contato</a></li>
+      </ul>
     </div>
-    <a href="admin.html" class="btn btn-outline-dark mt-4">Área Administrativa</a>
-  </main>
+  </div>
+</nav>
 
-  <footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2025 Igreja Cristã Nova Esperança</p>
-  </footer>
+<!-- HEADER -->
+<header>
+  <div class="overlay"></div>
+  <div class="content">
+    <h1 class="fw-bold display-4">Bem-vindo à Igreja Cristã Nova Esperança</h1>
+    <p class="lead">"Porque onde estiverem dois ou três reunidos em meu nome, aí estou eu no meio deles." (Mateus 18:20)</p>
+    <a href="#oracao" class="btn btn-primary btn-lg mt-3">Peça Oração</a>
+  </div>
+</header>
+
+<!-- SOBRE -->
+<section id="sobre" class="container text-center">
+  <h2 class="mb-4 fw-bold">Sobre Nós</h2>
+  <p class="lead">Somos uma igreja que prega a Palavra de Deus com amor e esperança, servindo nossa comunidade e levando o Evangelho.</p>
+  <p><strong>Endereço:</strong> Rua Exemplo, 123 - Cidade, Estado</p>
+  <div class="mt-3">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!... (LINK DO MAPS) ..." width="100%" height="250" style="border:0;" allowfullscreen></iframe>
+  </div>
+</section>
+
+<!-- CULTOS -->
+<section id="cultos" class="bg-light text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-4">Dias de Culto</h2>
+    <ul class="list-group list-group-flush w-50 mx-auto">
+      <li class="list-group-item">Domingo: Culto da Família - 19h</li>
+      <li class="list-group-item">Terça: Culto de Ensino - 19h30</li>
+      <li class="list-group-item">Quinta: Campanha de Oração - 19h30</li>
+    </ul>
+  </div>
+</section>
+
+<!-- DEPARTAMENTOS -->
+<section id="departamentos" class="container text-center">
+  <h2 class="fw-bold mb-4">Departamentos</h2>
+  <div class="row">
+    <div class="col-md-3"><div class="card p-3"><h5>Infantil</h5><p>Ensino bíblico divertido e educativo.</p></div></div>
+    <div class="col-md-3"><div class="card p-3"><h5>Jovens</h5><p>Encontros dinâmicos e inspiradores.</p></div></div>
+    <div class="col-md-3"><div class="card p-3"><h5>Mulheres</h5><p>Oração e comunhão fortalecendo laços.</p></div></div>
+    <div class="col-md-3"><div class="card p-3"><h5>Louvor</h5><p>Adoração através da música.</p></div></div>
+  </div>
+</section>
+
+<!-- PEDIDOS DE ORAÇÃO -->
+<section id="oracao" class="container">
+  <h2 class="fw-bold mb-4 text-center">Pedidos de Oração</h2>
+  <div class="form-section mx-auto w-75">
+    <form id="formOracao">
+      <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input type="text" id="nomeOracao" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Pedido</label>
+        <textarea id="pedidoOracao" class="form-control" rows="3" required></textarea>
+      </div>
+      <button class="btn btn-primary w-100">Enviar Pedido</button>
+    </form>
+  </div>
+</section>
+
+<!-- AVALIAÇÃO DE PREGAÇÃO -->
+<section id="avaliacao" class="bg-light">
+  <div class="container">
+    <h2 class="fw-bold mb-4 text-center">Avalie a Pregação</h2>
+    <div class="form-section mx-auto w-75">
+      <form id="formPregacao">
+        <div class="mb-3">
+          <label class="form-label">Pastor</label>
+          <input type="text" id="pastor" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Nota (1 a 5)</label>
+          <input type="number" id="nota" class="form-control" min="1" max="5" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Comentário</label>
+          <textarea id="comentario" class="form-control" rows="3"></textarea>
+        </div>
+        <button class="btn btn-success w-100">Enviar Avaliação</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="container text-center">
+  <h2 class="fw-bold mb-4">Contato</h2>
+  <p><i class="fas fa-phone"></i> (11) 99999-9999 | <i class="fas fa-envelope"></i> contato@icnovaesperanca.com</p>
+  <div class="social-icons mt-3">
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-youtube"></i></a>
+    <a href="#"><i class="fab fa-whatsapp"></i></a>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer class="text-center">
+  <p>&copy; 2025 Igreja Cristã Nova Esperança - Todos os direitos reservados</p>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+  // PEDIDO DE ORAÇÃO
+  document.getElementById("formOracao").addEventListener("submit", e=>{
+    e.preventDefault();
+    const nome = document.getElementById("nomeOracao").value;
+    const pedido = document.getElementById("pedidoOracao").value;
+    db.ref("pedidosOracao").push({ nome, pedido, data: new Date().toISOString() })
+      .then(()=>{ alert("Pedido enviado com sucesso!"); e.target.reset(); })
+      .catch(err=> alert("Erro: " + err.message));
+  });
+
+  // AVALIAÇÃO DE PREGAÇÃO
+  document.getElementById("formPregacao").addEventListener("submit", e=>{
+    e.preventDefault();
+    const pastor = document.getElementById("pastor").value;
+    const nota = document.getElementById("nota").value;
+    const comentario = document.getElementById("comentario").value;
+    db.ref("avaliacoes/pregacao").push({ pastor, nota, comentario, data: new Date().toISOString() })
+      .then(()=>{ alert("Avaliação enviada com sucesso!"); e.target.reset(); })
+      .catch(err=> alert("Erro: " + err.message));
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
