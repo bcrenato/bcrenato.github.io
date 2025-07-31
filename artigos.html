@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artigos - Igreja Modelo 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .radio-player {
+            background: linear-gradient(135deg, rgba(237, 50, 55, 0.9) 0%, rgba(200, 30, 35, 0.9) 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="https://igrejanet.webpress.net.br/modelo1" class="flex items-center">
+                        <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2018/11/logo-igreja.jpg" 
+                             alt="Logo Igreja" 
+                             class="h-16 object-contain">
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-red-600 focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6">
+                    <div class="dropdown relative">
+                        <a href="https://igrejanet.webpress.net.br/modelo1/" class="text-gray-700 hover:text-red-600 font-medium">Início</a>
+                    </div>
+                    
+                    <div class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-red-600 font-medium flex items-center">
+                            Igreja <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <div class="dropdown-menu absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 z-50">
+                            <a href="https://igrejanet.webpress.net.br/modelo1/quem-somos/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Quem Somos</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/localizacao/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Localização</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-red-600 font-medium flex items-center">
+                            Multimídia <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <div class="dropdown-menu absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 z-50">
+                            <a href="https://igrejanet.webpress.net.br/modelo1/fotos/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Fotos</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/videos/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Videos</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/ao-vivo/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Ao Vivo</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-red-600 font-medium flex items-center">
+                            Para Você <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <div class="dropdown-menu absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 z-50">
+                            <a href="https://igrejanet.webpress.net.br/modelo1/artigos/" class="block px-4 py-2 text-red-600 font-semibold hover:bg-red-50">Artigos</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/oracao/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Oração</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/biblia-online/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Biblia Online</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative">
+                        <a href="https://igrejanet.webpress.net.br/modelo1/webradio/" class="text-gray-700 hover:text-red-600 font-medium">Web Rádio</a>
+                    </div>
+                    
+                    <div class="dropdown relative">
+                        <a href="https://igrejanet.webpress.net.br/modelo1/contato/" class="text-gray-700 hover:text-red-600 font-medium">Contato</a>
+                    </div>
+                    
+                    <div class="dropdown relative">
+                        <a href="#" class="text-gray-700 hover:text-red-600 font-medium flex items-center">
+                            Membros <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <div class="dropdown-menu absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48 z-50">
+                            <a href="https://igrejanet.webpress.net.br/modelo1/ofertar/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Ofertar</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/membros/" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">Login</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4">
+                <div class="space-y-2">
+                    <a href="https://igrejanet.webpress.net.br/modelo1/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Início</a>
+                    
+                    <div class="px-3 py-2">
+                        <button class="flex items-center justify-between w-full text-gray-700 hover:text-red-600" onclick="toggleSubmenu('igreja-submenu')">
+                            Igreja <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="igreja-submenu" class="hidden mt-2 ml-4 space-y-2">
+                            <a href="https://igrejanet.webpress.net.br/modelo1/quem-somos/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Quem Somos</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/localizacao/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Localização</a>
+                        </div>
+                    </div>
+                    
+                    <div class="px-3 py-2">
+                        <button class="flex items-center justify-between w-full text-gray-700 hover:text-red-600" onclick="toggleSubmenu('multimidia-submenu')">
+                            Multimídia <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="multimidia-submenu" class="hidden mt-2 ml-4 space-y-2">
+                            <a href="https://igrejanet.webpress.net.br/modelo1/fotos/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Fotos</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/videos/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Videos</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/ao-vivo/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Ao Vivo</a>
+                        </div>
+                    </div>
+                    
+                    <div class="px-3 py-2">
+                        <button class="flex items-center justify-between w-full text-gray-700 hover:text-red-600" onclick="toggleSubmenu('para-voce-submenu')">
+                            Para Você <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="para-voce-submenu" class="hidden mt-2 ml-4 space-y-2">
+                            <a href="https://igrejanet.webpress.net.br/modelo1/artigos/" class="block px-3 py-2 text-red-600 font-semibold hover:bg-red-50 rounded-md">Artigos</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/oracao/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Oração</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/biblia-online/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Biblia Online</a>
+                        </div>
+                    </div>
+                    
+                    <a href="https://igrejanet.webpress.net.br/modelo1/webradio/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Web Rádio</a>
+                    <a href="https://igrejanet.webpress.net.br/modelo1/contato/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Contato</a>
+                    
+                    <div class="px-3 py-2">
+                        <button class="flex items-center justify-between w-full text-gray-700 hover:text-red-600" onclick="toggleSubmenu('membros-submenu')">
+                            Membros <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="membros-submenu" class="hidden mt-2 ml-4 space-y-2">
+                            <a href="https://igrejanet.webpress.net.br/modelo1/ofertar/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Ofertar</a>
+                            <a href="https://igrejanet.webpress.net.br/modelo1/membros/" class="block px-3 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Radio Player -->
+    <div class="radio-player text-white py-3 px-4 shadow-md">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-play-circle text-2xl"></i>
+                <div>
+                    <p class="font-bold">Rádio Online</p>
+                    <p class="text-sm opacity-80">O MELHOR TOCA AQUI</p>
+                </div>
+            </div>
+            <button class="bg-white text-red-600 px-4 py-1 rounded-full text-sm font-semibold hover:bg-gray-100">
+                Ouvir Agora
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Artigos e Estudos Bíblicos</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">Encontre aqui artigos edificantes para fortalecer sua fé e conhecimento bíblico.</p>
+        </div>
+        
+        <!-- Articles Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Article 1 -->
+            <div class="article-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                <a href="https://igrejanet.webpress.net.br/modelo1/perdao/">
+                    <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2018/08/perdao-300x189-1.jpg" 
+                         alt="O poder do perdão" 
+                         class="w-full h-48 object-cover">
+                </a>
+                <div class="p-6">
+                    <a href="https://igrejanet.webpress.net.br/modelo1/perdao/">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-red-600">O poder do perdão</h3>
+                    </a>
+                    <p class="text-gray-600 mb-4">O perdão (ou a falta dele) faz muita diferença na vida de alguém! A reconciliação horizontal determina se a vertical que recebemos de Deus vai permanecer em nossa vida ou...</p>
+                    <a href="https://igrejanet.webpress.net.br/modelo1/perdao/" class="text-red-600 font-semibold hover:underline flex items-center">
+                        Leia mais <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Article 2 -->
+            <div class="article-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                <a href="https://igrejanet.webpress.net.br/modelo1/paz/">
+                    <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2017/11/paz-300x200-1.jpg" 
+                         alt="Paz na tempestade" 
+                         class="w-full h-48 object-cover">
+                </a>
+                <div class="p-6">
+                    <a href="https://igrejanet.webpress.net.br/modelo1/paz/">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-red-600">Paz na tempestade</h3>
+                    </a>
+                    <p class="text-gray-600 mb-4">É possível que sua vida não seja repleta de alegrias o tempo todo, mas ela sempre pode estar cercada de paz. Aliás, dá para encontrar paz e segurança mesmo em...</p>
+                    <a href="https://igrejanet.webpress.net.br/modelo1/paz/" class="text-red-600 font-semibold hover:underline flex items-center">
+                        Leia mais <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Article 3 -->
+            <div class="article-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                <a href="https://igrejanet.webpress.net.br/modelo1/voltara/">
+                    <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2017/11/voltara-300x199-1.jpg" 
+                         alt="Jesus Voltará" 
+                         class="w-full h-48 object-cover">
+                </a>
+                <div class="p-6">
+                    <a href="https://igrejanet.webpress.net.br/modelo1/voltara/">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-red-600">Jesus Voltará</h3>
+                    </a>
+                    <p class="text-gray-600 mb-4">Jesus voltará para nos levar com Ele para a nossa verdadeira casa. E quando esse dia chegar, tudo o que hoje nos entristece, não existirá mais. Ele vem para buscar...</p>
+                    <a href="https://igrejanet.webpress.net.br/modelo1/voltara/" class="text-red-600 font-semibold hover:underline flex items-center">
+                        Leia mais <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Article 4 -->
+            <div class="article-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                <a href="https://igrejanet.webpress.net.br/modelo1/ressurreicao/">
+                    <img src="https://igrejanet.webpress.net.br/modelo1/wp-content/uploads/2017/11/ressurreicao-300x199-1.jpg" 
+                         alt="A ressurreição de Cristo" 
+                         class="w-full h-48 object-cover">
+                </a>
+                <div class="p-6">
+                    <a href="https://igrejanet.webpress.net.br/modelo1/ressurreicao/">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-red-600">A ressurreição de Cristo</h3>
+                    </a>
+                    <p class="text-gray-600 mb-4">Um sentimento de tristeza e derrota envolveu os discípulos quando Jesus sofreu e morreu na cruz e Seu corpo foi colocado sem vida no sepulcro. Apesar de tudo o que...</p>
+                    <a href="https://igrejanet.webpress.net.br/modelo1/ressurreicao/" class="text-red-600 font-semibold hover:underline flex items-center">
+                        Leia mais <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Share Section -->
+        <div class="mt-16 bg-gray-100 rounded-lg p-8 text-center">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Compartilhe nosso conteúdo nas redes sociais</h3>
+            <div class="flex justify-center space-x-4">
+                <a href="https://facebook.com/" class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors duration-300">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://instagram.com/" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-full hover:opacity-90 transition-opacity duration-300">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/" class="bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition-colors duration-300">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Social Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 border-b border-gray-700 pb-2">Redes Sociais</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://facebook.com/" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="https://instagram.com/" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="https://www.youtube.com/" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 border-b border-gray-700 pb-2">Menu Rápido</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://igrejanet.webpress.net.br/modelo1/" class="text-gray-400 hover:text-white transition-colors duration-300">HOME</a></li>
+                        <li><a href="https://igrejanet.webpress.net.br/modelo1/quem-somos/" class="text-gray-400 hover:text-white transition-colors duration-300">QUEM SOMOS</a></li>
+                        <li><a href="https://igrejanet.webpress.net.br/modelo1/localizacao/" class="text-gray-400 hover:text-white transition-colors duration-300">LOCALIZAÇÃO</a></li>
+                        <li><a href="https://igrejanet.webpress.net.br/modelo1/webradio/" class="text-gray-400 hover:text-white transition-colors duration-300">WEB RÁDIO</a></li>
+                        <li><a href="https://igrejanet.webpress.net.br/modelo1/contato/" class="text-gray-400 hover:text-white transition-colors duration-300">CONTATO</a></li>
+                        <li><a href="https://www.webpress.net.br/privacidade" class="text-gray-400 hover:text-white transition-colors duration-300">POLÍTICA DE PRIVACIDADE</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Address -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 border-b border-gray-700 pb-2">Endereço</h4>
+                    <address class="text-gray-400 not-italic">
+                        Av Júlio de Castilhos 123<br>
+                        Bairro Centro<br>
+                        Porto Alegre – RS
+                    </address>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 border-b border-gray-700 pb-2">Contato</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            <a href="tel:1133333333" class="hover:text-white transition-colors duration-300">(11) 3333 33333</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-whatsapp mr-3"></i>
+                            <a href="https://api.whatsapp.com/send?phone=5511999999999&text=Ol%C3%A1!%20Estou%20no%20site%20e%20preciso%20de%20mais%20informa%C3%A7%C3%B5es." class="hover:text-white transition-colors duration-300">(11) 99999 99999</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            <a href="mailto:contato@webpress.net.br" class="hover:text-white transition-colors duration-300">contato@webpress.net.br</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="mt-12 pt-6 border-t border-gray-800 text-center text-gray-500 text-sm">
+                <p>© Copyright - Desenvolvido por Webpress</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://api.whatsapp.com/send/?phone=5511999999999&text=Ol%C3%A1!%20Estou%20no%20site%20e%20preciso%20de%20mais%20informa%C3%A7%C3%B5es." 
+       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300 z-40">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Cookie Consent -->
+    <div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0 text-sm md:text-base">Ao navegar você concorda com nossa <a href="https://www.webpress.net.br/privacidade.html" class="text-red-400 hover:underline">política de privacidade, cookies e dados</a>.</p>
+            <button id="cookie-accept" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md transition-colors duration-300">Ok</button>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Toggle submenu in mobile view
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            submenu.classList.toggle('hidden');
+        }
+        
+        // Cookie consent
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('cookieConsent')) {
+                const cookieConsent = document.getElementById('cookie-consent');
+                cookieConsent.classList.remove('hidden');
+                
+                document.getElementById('cookie-accept').addEventListener('click', function() {
+                    localStorage.setItem('cookieConsent', 'true');
+                    cookieConsent.classList.add('hidden');
+                });
+            }
+        });
+        
+        // Radio player button
+        const radioButton = document.querySelector('.radio-player button');
+        if (radioButton) {
+            radioButton.addEventListener('click', function() {
+                // Here you would add the code to play the radio
+                alert('Conectando à Rádio Online...');
+            });
+        }
+    </script>
+</body>
+</html>
